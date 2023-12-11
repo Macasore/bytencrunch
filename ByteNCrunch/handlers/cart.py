@@ -115,7 +115,7 @@ def manage_cart(update, bot):
         reply_keyboard = [
             
             [
-                InlineKeyboardButton(text="Edit Cart Itemsw", callback_data="edit_cart"),
+                InlineKeyboardButton(text="Edit Cart Items", callback_data="edit_cart"),
                 InlineKeyboardButton(text="Proceed to Checkout", callback_data="checkout")
             ] ,
             [
@@ -168,7 +168,7 @@ def edit_cart(update, bot):
                 match data:
                     case "edit_cart_less_one":
                         if cart[browse_state][1] >1:
-                            bot.user_data["cart"][cart[0][0]] -= 1
+                            bot.user_data["cart"][cart[browse_state][0]] -= 1
                         else:
                             cart_item = cart[browse_state]
                             product_id = cart_item[0]
@@ -180,13 +180,16 @@ def edit_cart(update, bot):
                             product = get_product(product_id)
                             my_text = f"{count} order(s) of {product[1]} at {product[3]} each. \n Subtotal=> {product[3]*count}"
                     case "edit_cart_plus_one": 
-                        bot.user_data["cart"][cart[0][0]] += 1
-                cart = cart_to_lol(bot.user_data["cart"])
-                cart_item = cart[browse_state]
-                product_id = cart_item[0]
-                count = cart_item[1]
-                product = get_product(product_id)
-                my_text = f"{count} order(s) of {product[1]} at {product[3]} each. \n Subtotal=> {product[3]*count}"
+                        bot.user_data["cart"][cart[browse_state][0]] += 1
+                if len(bot.user_data["cart"]) == 0:
+                    my_text = "Nothing here! \n /start to go back home"
+                else:
+                    cart = cart_to_lol(bot.user_data["cart"])
+                    cart_item = cart[browse_state]
+                    product_id = cart_item[0]
+                    count = cart_item[1]
+                    product = get_product(product_id)
+                    my_text = f"{count} order(s) of {product[1]} at {product[3]} each. \n Subtotal=> {product[3]*count}"
             case "edit_cart_kill_one":
                 browse_state = bot.user_data["browse_state"] 
                 cart_item = cart[browse_state]
@@ -195,18 +198,20 @@ def edit_cart(update, bot):
                 if len(bot.user_data["cart"]) == 0:
                     my_text = "Nothing here! \n /start to go back home"
                 else:
+                    browse_state = 0
                     cart = list(bot.user_data["cart"].items())
                     cart_item = cart[browse_state]
                     product_id = cart_item[0]
                     count = cart_item[1]
                     product = get_product(product_id)
+                    bot.user_data["browse_state"] = browse_state
                     my_text = f"{count} order(s) of {product[1]} at {product[3]} each. \n Subtotal=> {product[3]*count}"
 
             case "edit_cart_next" | "edit_cart_prev":
                 match data:
                     case "edit_cart_next":
                         browse_state = bot.user_data["browse_state"]
-                        if browse_state == len(cart):
+                        if browse_state + 1 == len(cart):
                             del(buttons[1][1])
                         else:
                             browse_state = bot.user_data["browse_state"] + 1
@@ -243,4 +248,4 @@ add_to_cart_handler = CallbackQueryHandler(callback=add_to_cart, pattern="add_pr
 cart_quantity_handler = CallbackQueryHandler(callback=add_to_cart, pattern="cart_quan_", run_async=True)
 confirm_cart = CallbackQueryHandler(callback=add_to_cart_confirm, pattern="add_to_cart_")
 manage_cart_handler = CallbackQueryHandler(callback=manage_cart, pattern="manage_cart")
-edit_cart_handler= CallbackQueryHandler(callback=edit_cart, pattern="edit_cart")
+edit_cart_handler= CallbackQueryHandler(callback=edit_cart, pattern="edit_cart", run_async=True)
