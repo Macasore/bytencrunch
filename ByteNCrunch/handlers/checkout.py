@@ -34,6 +34,8 @@ def checkout(update, bot):
 def direct_transfer(update, bot):
     query = update.callback_query
     total = int(bot.user_data["cart_total"])
+    rate = compute_rates(total)
+    total += rate
     acc_name = os.environ["ACCOUNT_NAME"]
     acc_no =  os.environ["ACCOUNT_NUMBER"]
     bank =  os.environ["BANK"]
@@ -56,6 +58,9 @@ def confirm_direct_transfer(update, bot):
     query = update.callback_query
     # user_name = os.environ["byte_user_name"]
     total = int(bot.user_data["cart_total"])
+    rate = compute_rates(int(bot.user_data["cart_total"]))
+    new_total = total+rate
+    bot.user_data["cart_total"] = new_total
     name = get_user_name(update.effective_user.id)
     room = get_user_room(update.effective_user.id)
     print(name)
@@ -67,14 +72,13 @@ def confirm_direct_transfer(update, bot):
         product = get_product(i[0])
         my_text += f"\n >> {i[1]} order(s) of {product[1]} at # {int(product[3]) * i[1]} \n Delivered to {room}"
 
-    my_text += f" \n Total(plus shipping) = {total}"
+    my_text += f" \n Total(plus shipping) = {new_total}"
     reply_keyboard = [
          [
             InlineKeyboardButton(text="Back to home!", callback_data="start")
         ]
     ]
-    chat_id = os.getenv("order_group_id")
-    bot.bot.send_message(chat_id=chat_id, text=my_text)
+    bot.bot.send_message(chat_id=-4050264876, text=my_text)
     markup = InlineKeyboardMarkup(reply_keyboard)
     query.edit_message_text(
         text=text_to_send,
