@@ -32,7 +32,9 @@ def browse_shops_init(update, bot):
             ],
             [
                 InlineKeyboardButton(text="Manage Cart", callback_data="manage_cart")
-            ] 
+           ,
+            InlineKeyboardButton(text="Back to Home!", callback_data="start")
+        ]
         
     ]
     markup = InlineKeyboardMarkup(reply_keyboard)
@@ -59,7 +61,9 @@ def browse_vendors(update,bot):
                         ],
                         [
                             InlineKeyboardButton(text="Manage Cart", callback_data="manage_cart")
-                        ] 
+                   ,
+            InlineKeyboardButton(text="Back to Home!", callback_data="start")
+        ]
                     ]
             else: 
                 state = bot.user_data["browse_state"]
@@ -77,7 +81,9 @@ def browse_vendors(update,bot):
                         ],
                         [
                             InlineKeyboardButton(text="Manage Cart", callback_data="manage_cart")
-                        ] 
+                      ,
+            InlineKeyboardButton(text="Back to Home!", callback_data="start")
+        ]
                     ]
             
             
@@ -100,7 +106,9 @@ def browse_vendors(update,bot):
                     ],
                     [
                         InlineKeyboardButton(text="Manage Cart", callback_data="manage_cart")
-                    ] 
+                  ,
+            InlineKeyboardButton(text="Back to Home!", callback_data="start")
+        ]
                 ]
             elif state == 5:
                 state = bot.user_data["browse_state"]
@@ -114,10 +122,12 @@ def browse_vendors(update,bot):
                     
                     [
                     InlineKeyboardButton(text="Next", callback_data="browse_vendors_next")
-                    ],
-                    [
+                    ,
                         InlineKeyboardButton(text="Manage Cart", callback_data="manage_cart")
-                    ] 
+                    ],
+        [
+            InlineKeyboardButton(text="Back to Home!", callback_data="start")
+        ]
                 ]
 
     markup = InlineKeyboardMarkup(reply_keyboard)
