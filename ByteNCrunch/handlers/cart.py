@@ -169,27 +169,40 @@ def edit_cart(update, bot):
                     case "edit_cart_less_one":
                         if cart[browse_state][1] >1:
                             bot.user_data["cart"][cart[browse_state][0]] -= 1
+                            if len(bot.user_data["cart"]) == 0:
+                                my_text = "Nothing here! \n /start to go back home"
+                            else:
+                                cart = cart_to_lol(bot.user_data["cart"])
+                                cart_item = cart[browse_state]
+                                product_id = cart_item[0]
+                                count = cart_item[1]
+                                product = get_product(product_id)
+                                my_text = f"{count} order(s) of {product[1]} at {product[3]} each. \n Subtotal=> {product[3]*count}"
+                                
                         else:
                             cart_item = cart[browse_state]
                             product_id = cart_item[0]
                             del(bot.user_data["cart"][product_id])
-                            cart = list(bot.user_data["cart"].items())
-                            cart_item = cart[browse_state]
-                            product_id = cart_item[0]
-                            count = cart_item[1]
-                            product = get_product(product_id)
-                            my_text = f"{count} order(s) of {product[1]} at {product[3]} each. \n Subtotal=> {product[3]*count}"
+                            if len(bot.user_data["cart"]) == 0:
+                                my_text = "Nothing here! \n /start to go back home"
+                            else:
+                                browse_state = 0
+                                cart = list(bot.user_data["cart"].items())
+                                cart_item = cart[browse_state]
+                                product_id = cart_item[0]
+                                count = cart_item[1]
+                                product = get_product(product_id)
+                                bot.user_data["browse_state"] = browse_state
+                                my_text = f"{count} order(s) of {product[1]} at {product[3]} each. \n Subtotal=> {product[3]*count}"
                     case "edit_cart_plus_one": 
                         bot.user_data["cart"][cart[browse_state][0]] += 1
-                if len(bot.user_data["cart"]) == 0:
-                    my_text = "Nothing here! \n /start to go back home"
-                else:
-                    cart = cart_to_lol(bot.user_data["cart"])
-                    cart_item = cart[browse_state]
-                    product_id = cart_item[0]
-                    count = cart_item[1]
-                    product = get_product(product_id)
-                    my_text = f"{count} order(s) of {product[1]} at {product[3]} each. \n Subtotal=> {product[3]*count}"
+                
+                        cart = cart_to_lol(bot.user_data["cart"])
+                        cart_item = cart[browse_state]
+                        product_id = cart_item[0]
+                        count = cart_item[1]
+                        product = get_product(product_id)
+                        my_text = f"{count} order(s) of {product[1]} at {product[3]} each. \n Subtotal=> {product[3]*count}"
             case "edit_cart_kill_one":
                 browse_state = bot.user_data["browse_state"] 
                 cart_item = cart[browse_state]
