@@ -60,13 +60,13 @@ def flutterlink(subtotal, user_id, my_order, reference):
     data = {
         'tx_ref': reference,
         'amount': subtotal,
+        'redirect_url': 'https://webhook.site/1b6e8e25-87e4-4d04-a2d0-64f3d8b75d82',
         'customer': {
             'email': user_email,
         },
         'customizations': {
             'title': "BytenCrunch"
-        },
-        'redirect_url': 'https://eloquentexchange.org/dashboard'
+        }
     }
     
 

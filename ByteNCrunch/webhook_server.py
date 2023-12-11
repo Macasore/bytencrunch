@@ -1,4 +1,4 @@
-from flask import Flask, request, make_response, jsonify
+from flask import Flask, render_template, request, make_response, jsonify
 import os
 import json
 from database.query import update_status
@@ -41,7 +41,9 @@ def flutterwave_webhook():
         new_status = update_status(reference, status)
         return response
     
-    
+@app.route('/redirect', methods=['GET'])
+def redirect():
+    return render_template('redirect.html')
 
 
 

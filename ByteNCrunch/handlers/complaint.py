@@ -25,7 +25,6 @@ def add_complaint(update, bot):
         [InlineKeyboardButton(text="Delivery Complaint", callback_data="DELIVERY COMPLAINT")],
         [InlineKeyboardButton(text="Others", callback_data="OTHER COMPLAINT")]
     ]
-    print("69 42")
     markup = InlineKeyboardMarkup(reply_keyboard)
     query.edit_message_text(
         text="Please select your complaint category: ", 
