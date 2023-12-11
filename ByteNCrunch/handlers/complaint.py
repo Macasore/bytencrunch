@@ -23,7 +23,8 @@ def add_complaint(update, bot):
     reply_keyboard = [
         [InlineKeyboardButton(text="Payment Complaint", callback_data="PAYMENT COMPLAINT")],
         [InlineKeyboardButton(text="Delivery Complaint", callback_data="DELIVERY COMPLAINT")],
-        [InlineKeyboardButton(text="Others", callback_data="OTHER COMPLAINT")]
+        [InlineKeyboardButton(text="Others", callback_data="OTHER COMPLAINT")],
+        [InlineKeyboardButton(text="Back to Home!", callback_data="start")]
     ]
     markup = InlineKeyboardMarkup(reply_keyboard)
     query.edit_message_text(
