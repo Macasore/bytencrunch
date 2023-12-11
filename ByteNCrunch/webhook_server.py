@@ -3,6 +3,9 @@ import os
 import json
 from database.query import update_status
 import requests
+from dotenv.main import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
 
@@ -48,4 +51,6 @@ def redirect():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',port=os.environ.get('PORT'))
+    port = os.getenv('PORT')
+    print(port)
+    app.run(host='0.0.0.0',port=port)
