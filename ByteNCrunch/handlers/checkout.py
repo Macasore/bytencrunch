@@ -22,7 +22,7 @@ def checkout(update, bot):
             InlineKeyboardButton(text="Bank tranfer to Byte n Crunch", callback_data="pay_with_direct_transfer")
         ] ,
         [
-            InlineKeyboardButton(text="Pay with FLutterwave", callback_data="pay_with_flutter_wave")
+            InlineKeyboardButton(text="Pay with Flutterwave", callback_data="pay_with_flutter_wave")
         ]
     ]
     markup = InlineKeyboardMarkup(reply_keyboard)
