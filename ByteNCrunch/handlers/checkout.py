@@ -23,6 +23,9 @@ def checkout(update, bot):
         ] ,
         [
             InlineKeyboardButton(text="Pay with Flutterwave", callback_data="pay_with_flutter_wave")
+        ],
+         [
+            InlineKeyboardButton(text="Back to home!", callback_data="start")
         ]
     ]
     markup = InlineKeyboardMarkup(reply_keyboard)
