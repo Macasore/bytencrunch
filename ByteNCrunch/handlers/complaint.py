@@ -119,7 +119,7 @@ def check(update, context):
         [InlineKeyboardButton(text="Back to Home!", callback_data="start")],
     ]
         markup = InlineKeyboardMarkup(reply_keyboard)
-        query.edit_message_text("Thank you for your feedback, we'll get back to you shortly\n",
+        query.edit_message_text("Thank you for your feedback, Our customer service team would reach out to you via your email shortly\n",
                                 reply_markup = markup)
         group_chat_id = os.getenv('complaint_group_id')
         summary_text = f"Category: {complaint['category']}\nName: {complaint['full_name']}\nMatric number: {complaint['matric_no']}\n Email: {complaint['email']} \nRoom_number: {complaint['hall_roomno']}\nComplaint: {complaint['description']}"
