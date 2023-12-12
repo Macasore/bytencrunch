@@ -8,7 +8,7 @@ from filters.helpers import get_student
 load_dotenv()
 
 logger = logging.getLogger(__name__)
-NAME, MATRIC_NO, HALL, DESCRIPTION, SUMMARY, CHECK, NAME_MESSAGE= range(7)
+NAME, MATRIC_NO, EMAIL, HALL, DESCRIPTION, SUMMARY, CHECK, NAME_MESSAGE= range(8)
 complaint = {
     'username': 'null',
     'full_name': '',
@@ -59,12 +59,20 @@ def matric_no(update, context):
      complaint["full_name"] = update.message.text
      update.message.reply_text("Please input Matric number: ")
      
+     return EMAIL
+ 
+def email(update, context):
+     query = update.callback_query
+     logger.info("THis user's matric number is %s'", update.message.text)
+     complaint["matric_no"] = update.message.text
+     update.message.reply_text("Please input your email address: ")
+     
      return HALL
  
 def hall(update, context):
      query = update.callback_query
-     logger.info("THis user's matric number is %s'", update.message.text)
-     complaint["matric_no"] = update.message.text
+     logger.info("THis user's email address is %s'", update.message.text)
+     complaint["email"] = update.message.text
      update.message.reply_text("Please enter you hall and room number eg: Daniel E403: ")
      
      return DESCRIPTION
@@ -85,8 +93,8 @@ def summary(update, context):
      user_id = update.effective_user.id
      student = get_student(user_id)
      print(student)
-     user_email = student[4]
-     complaint["email"] = user_email
+    #  user_email = student[4]
+    #  complaint["email"] = user_email
      reply_keyboard = [
         [InlineKeyboardButton(text="YES", callback_data="YES")],
         [InlineKeyboardButton(text="NO", callback_data="NO")]
@@ -107,9 +115,14 @@ def check(update, context):
 
     if check == 'YES':
         query.answer()
-        query.edit_message_text("Thank you for your feedback, we'll get back to you shortly\n")
+        reply_keyboard = [
+        [InlineKeyboardButton(text="Back to Home!", callback_data="start")],
+    ]
+        markup = InlineKeyboardMarkup(reply_keyboard)
+        query.edit_message_text("Thank you for your feedback, we'll get back to you shortly\n",
+                                reply_markup = markup)
         group_chat_id = os.getenv('complaint_group_id')
-        summary_text = f"Category: {complaint['category']}\nName: {complaint['full_name']}\nMatric number: {complaint['matric_no']}\nRoom_number: {complaint['hall_roomno']}\nComplaint: {complaint['description']}"
+        summary_text = f"Category: {complaint['category']}\nName: {complaint['full_name']}\nMatric number: {complaint['matric_no']}\n Email: {complaint['email']} \nRoom_number: {complaint['hall_roomno']}\nComplaint: {complaint['description']}"
         context.bot.send_message(chat_id=group_chat_id, text=summary_text)
         return ConversationHandler.END
     elif check == 'NO':
@@ -134,6 +147,7 @@ complaint_handler = ConversationHandler(
         NAME: [CallbackQueryHandler(name)],
         NAME_MESSAGE: [MessageHandler(Filters.text & ~Filters.command, name_message, run_async=True)],
         MATRIC_NO: [MessageHandler(Filters.text & ~Filters.command, matric_no, run_async=True)],
+        EMAIL: [MessageHandler(Filters.text & ~Filters.command, email, run_async=True)],
         HALL: [MessageHandler(Filters.text & ~Filters.command, hall, run_async=True)],
         DESCRIPTION: [MessageHandler(Filters.text & ~Filters.command, desc, run_async=True)],
         SUMMARY: [MessageHandler(Filters.text & ~Filters.command, summary,  run_async=True)],
