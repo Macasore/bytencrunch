@@ -157,5 +157,6 @@ complaint_handler = ConversationHandler(
         SUMMARY: [MessageHandler(Filters.text & ~Filters.command, summary,  run_async=True)],
         CHECK: [CallbackQueryHandler(check)]
     },
-    fallbacks=[CommandHandler("cancel", cancel)],
+    fallbacks=[CallbackQueryHandler(callback=cancel, pattern="cancel", run_async=True)],
+    # fallbacks=[CommandHandler("cancel", cancel)],
     )
