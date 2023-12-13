@@ -8,7 +8,7 @@ from filters.helpers import get_student
 load_dotenv()
 
 logger = logging.getLogger(__name__)
-NAME, MATRIC_NO, EMAIL, HALL, DESCRIPTION, SUMMARY, CHECK, NAME_MESSAGE= range(8)
+NAME, MATRIC_NO, HALL, DESCRIPTION, SUMMARY, CHECK, NAME_MESSAGE= range(7)
 complaint = {
     'username': 'null',
     'full_name': '',
@@ -43,37 +43,45 @@ def name(update, context):
     logger.info("THis user chose %s", query.data)
     complaint['category'] = query.data
     query.answer()
-    query.edit_message_text("Please input your full-name: ")
+    reply_keyboard = [
+        [InlineKeyboardButton(text="Cancel", callback_data="cancel")],
+    ]
+    markup = InlineKeyboardMarkup(reply_keyboard)
+    query.edit_message_text(text = "Please input your full-name: ", reply_markup=markup)
 
     return MATRIC_NO
  
 def name_message(update, context):
     user_message = update.message.text
     logger.info("This user chose %s'", user_message)
-    update.message.reply_text("Please input your full-name: ")
+    reply_keyboard = [
+        [InlineKeyboardButton(text="Cancel", callback_data="cancel")],
+    ]
+    markup = InlineKeyboardMarkup(reply_keyboard)
+    update.message.reply_text(text = "Please input your full-name: ", reply_markup=markup)
     return MATRIC_NO
 
 def matric_no(update, context):
      query = update.callback_query
      logger.info("THis user's fullname is %s'", update.message.text)
      complaint["full_name"] = update.message.text
-     update.message.reply_text("Please input Matric number: ")
-     
-     return EMAIL
- 
-def email(update, context):
-     query = update.callback_query
-     logger.info("THis user's matric number is %s'", update.message.text)
-     complaint["matric_no"] = update.message.text
-     update.message.reply_text("Please input your email address: ")
+     reply_keyboard = [
+        [InlineKeyboardButton(text="Cancel", callback_data="cancel")],
+     ]
+     markup = InlineKeyboardMarkup(reply_keyboard)
+     update.message.reply_text(text = "Please input Matric number: ", reply_markup=markup)
      
      return HALL
  
 def hall(update, context):
      query = update.callback_query
-     logger.info("THis user's email address is %s'", update.message.text)
-     complaint["email"] = update.message.text
-     update.message.reply_text("Please enter you hall and room number eg: Daniel E403: ")
+     logger.info("THis user's matric number is %s'", update.message.text)
+     complaint["matric_no"] = update.message.text
+     reply_keyboard = [
+        [InlineKeyboardButton(text="Cancel", callback_data="cancel")],
+    ]
+     markup = InlineKeyboardMarkup(reply_keyboard)
+     update.message.reply_text(text = "Please enter you hall and room number eg: Daniel E403: ", reply_markup=markup)
      
      return DESCRIPTION
  
@@ -82,7 +90,11 @@ def desc(update, context):
      query = update.callback_query
      logger.info("This user's email is %s'", update.message.text)
      complaint["hall_roomno"] = update.message.text
-     update.message.reply_text("Please input your complaint description: ")
+     reply_keyboard = [
+        [InlineKeyboardButton(text="Cancel", callback_data="cancel")],
+    ]
+     markup = InlineKeyboardMarkup(reply_keyboard) 
+     update.message.reply_text(text = "Please input your complaint description: ", reply_markup=markup)
      
      return SUMMARY
  
@@ -93,11 +105,12 @@ def summary(update, context):
      user_id = update.effective_user.id
      student = get_student(user_id)
      print(student)
-    #  user_email = student[4]
-    #  complaint["email"] = user_email
+     user_email = student[4]
+     complaint["email"] = user_email
      reply_keyboard = [
         [InlineKeyboardButton(text="YES", callback_data="YES")],
-        [InlineKeyboardButton(text="NO", callback_data="NO")]
+        [InlineKeyboardButton(text="NO", callback_data="NO")],
+         [InlineKeyboardButton(text="Cancel", callback_data="cancel")],
      ]
      print(complaint['description'])
      markup = InlineKeyboardMarkup(reply_keyboard)
@@ -115,19 +128,22 @@ def check(update, context):
 
     if check == 'YES':
         query.answer()
-        reply_keyboard = [
-        [InlineKeyboardButton(text="Back to Home!", callback_data="start")],
-    ]
-        markup = InlineKeyboardMarkup(reply_keyboard)
-        query.edit_message_text("Thank you for your feedback, Our customer service team would reach out to you via your email shortly\n",
-                                reply_markup = markup)
+        query.edit_message_text("Thank you for your feedback, we'll get back to you shortly\n")
         group_chat_id = os.getenv('complaint_group_id')
-        summary_text = f"Category: {complaint['category']}\nName: {complaint['full_name']}\nMatric number: {complaint['matric_no']}\n Email: {complaint['email']} \nRoom_number: {complaint['hall_roomno']}\nComplaint: {complaint['description']}"
-        context.bot.send_message(chat_id=group_chat_id, text=summary_text)
+        summary_text = f"Category: {complaint['category']}\nName: {complaint['full_name']}\nMatric number: {complaint['matric_no']}\nRoom_number: {complaint['hall_roomno']}\nComplaint: {complaint['description']}"
+        reply_keyboard = [
+       [InlineKeyboardButton(text="Back to Home!", callback_data="start")],
+        ]
+        markup = InlineKeyboardMarkup(reply_keyboard)
+        context.bot.send_message(chat_id=group_chat_id, text=summary_text,reply_markup=markup)
         return ConversationHandler.END
     elif check == 'NO':
-        query.answer()
-        query.edit_message_text("please input 'continue'\n")
+    #     reply_keyboard = [
+    #     [InlineKeyboardButton(text="Cancel", callback_data="cancel")],
+    # ]
+    #     markup = InlineKeyboardMarkup(reply_keyboard)
+    #     query.answer()
+    #     query.edit_message_text(text="please input 'continue'\n" ,reply_markup=markup)
         return NAME_MESSAGE
     
         
@@ -135,8 +151,15 @@ def cancel(update, context) -> int:
     """Cancels and ends the conversation."""
     user = update.message.from_user
     logger.info("User %s canceled the conversation.", user.first_name)
+    reply_keyboard = buttons+[
+        [
+            InlineKeyboardButton(text="Back to Home!", callback_data="start")
+        ]
+                ]
+
+    markup = InlineKeyboardMarkup(reply_keyboard)
     update.message.reply_text(
-        "Bye! I hope we can talk again some day.", reply_markup=ReplyKeyboardRemove()
+        "Bye! I hope we can talk again some day.", reply_markup=markup
     )
 
     return ConversationHandler.END   
@@ -147,11 +170,11 @@ complaint_handler = ConversationHandler(
         NAME: [CallbackQueryHandler(name)],
         NAME_MESSAGE: [MessageHandler(Filters.text & ~Filters.command, name_message, run_async=True)],
         MATRIC_NO: [MessageHandler(Filters.text & ~Filters.command, matric_no, run_async=True)],
-        EMAIL: [MessageHandler(Filters.text & ~Filters.command, email, run_async=True)],
         HALL: [MessageHandler(Filters.text & ~Filters.command, hall, run_async=True)],
         DESCRIPTION: [MessageHandler(Filters.text & ~Filters.command, desc, run_async=True)],
         SUMMARY: [MessageHandler(Filters.text & ~Filters.command, summary,  run_async=True)],
         CHECK: [CallbackQueryHandler(check)]
     },
-    fallbacks=[CommandHandler("cancel", cancel)],
+     fallbacks=[CallbackQueryHandler(callback=cancel, pattern="cancel", run_async=True)],
+    # fallbacks=[CommandHandler("cancel", cancel)],
     )
