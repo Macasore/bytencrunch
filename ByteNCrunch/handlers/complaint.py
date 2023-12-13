@@ -43,11 +43,7 @@ def name(update, context):
     logger.info("THis user chose %s", query.data)
     complaint['category'] = query.data
     query.answer()
-    reply_keyboard = [
-        [InlineKeyboardButton(text="Cancel", callback_data="cancel")],
-    ]
-    markup = InlineKeyboardMarkup(reply_keyboard)
-    query.edit_message_text(text="Please input your full-name: " ,reply_markup=markup)
+    query.edit_message_text("Please input your full-name: ")
 
     return MATRIC_NO
  
@@ -137,8 +133,8 @@ def check(update, context):
         
 def cancel(update, context) -> int:
     """Cancels and ends the conversation."""
-    # user = update.message.from_user
-    # logger.info("User %s canceled the conversation.", user.first_name)
+    user = update.message.from_user
+    logger.info("User %s canceled the conversation.", user.first_name)
     update.message.reply_text(
         "Bye! I hope we can talk again some day.", reply_markup=ReplyKeyboardRemove()
     )
@@ -157,6 +153,5 @@ complaint_handler = ConversationHandler(
         SUMMARY: [MessageHandler(Filters.text & ~Filters.command, summary,  run_async=True)],
         CHECK: [CallbackQueryHandler(check)]
     },
-    fallbacks=[CallbackQueryHandler(callback=cancel, pattern="cancel", run_async=True)],
-    # fallbacks=[CommandHandler("cancel", cancel)],
+    fallbacks=[CommandHandler("cancel", cancel)],
     )
