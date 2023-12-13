@@ -43,7 +43,11 @@ def name(update, context):
     logger.info("THis user chose %s", query.data)
     complaint['category'] = query.data
     query.answer()
-    query.edit_message_text("Please input your full-name: ")
+    reply_keyboard = [
+        [InlineKeyboardButton(text="Cancel", callback_data="cancel")],
+    ]
+    markup = InlineKeyboardMarkup(reply_keyboard)
+    query.edit_message_text(text="Please input your full-name: " ,reply_markup=markup)
 
     return MATRIC_NO
  
