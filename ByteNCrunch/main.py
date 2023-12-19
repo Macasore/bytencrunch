@@ -37,7 +37,7 @@ def flutterwave_webhook():
             group_id = os.getenv("order_group_id")
             message = f"Payment successful for reference: {reference} with email: {email}"
             requests.get(f"https://api.telegram.org/bot{telegram_token}/sendMessage?chat_id={group_id}&text={message}")
-            return response
+            return render_template('redirect.html')
         except:
             print("error")
     else:

@@ -60,7 +60,7 @@ def flutterlink(subtotal, user_id, my_order, reference):
     data = {
         'tx_ref': reference,
         'amount': subtotal,
-        'redirect_url': 'https://webhook.site/1b6e8e25-87e4-4d04-a2d0-64f3d8b75d82',
+        'redirect_url': 'https://webhook.site/358549f4-e83f-4aaa-8e62-394b7d7fe898',
         'customer': {
             'email': user_email,
         },
