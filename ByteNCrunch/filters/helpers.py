@@ -60,7 +60,7 @@ def flutterlink(subtotal, user_id, my_order, reference):
     data = {
         'tx_ref': reference,
         'amount': subtotal,
-        'redirect_url': 'https://webhook.site/358549f4-e83f-4aaa-8e62-394b7d7fe898',
+        'redirect_url': 'https://bytencrunch-ed2943193a2c.herokuapp.com/redirect',
         'customer': {
             'email': user_email,
         },
