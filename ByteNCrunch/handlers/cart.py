@@ -1,7 +1,7 @@
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import  CallbackQueryHandler
 from database.query import get_product
-from filters.helpers import cart_to_lol
+from filters.helpers import cart_to_lol, recompute_total
 
 
 def add_to_cart(update, bot):
@@ -89,7 +89,7 @@ def add_to_cart_confirm(update, bot):
     ]
     markup = InlineKeyboardMarkup(reply_keyboard)
     query.edit_message_text(
-        text=f"{product_count} order(s) of {get_product(product_id)[1] }added to cart!",
+        text=f"{product_count} orders of {get_product(product_id)[1] }added to cart! \n To proceed to checkout, tap on 'Manage Cart'",
         reply_markup=markup,
     )
 
@@ -255,6 +255,7 @@ def edit_cart(update, bot):
         text=my_text,
         reply_markup=markup,
     )
+    bot.user_data["cart_total"] = recompute_total(bot.user_data["cart"])
 
     
 add_to_cart_handler = CallbackQueryHandler(callback=add_to_cart, pattern="add_product_", run_async=True )
