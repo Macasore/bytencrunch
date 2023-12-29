@@ -13,7 +13,7 @@ from dotenv.main import load_dotenv
 import requests
 import uuid
 from database.models import FlutterPayment, Student
-from database.query import get_student
+from database.query import get_student, get_product
 
 load_dotenv()
 
@@ -39,6 +39,14 @@ def cart_to_lol(cart):
         new_cart.append(list(item))
 
     return new_cart
+
+def recompute_total(cart):
+    total = 0
+    for key,value in cart.items():
+        prod = get_product(key)
+        total += (value * prod[3])
+    return total
+
 
 
 def flutterlink(subtotal, user_id, my_order, reference):
