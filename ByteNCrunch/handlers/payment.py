@@ -6,7 +6,7 @@ import uuid
 import requests
 import os
 from dotenv.main import load_dotenv
-from database.query import get_product, get_status
+from database.query import get_product, get_status, get_user_name, get_user_room
 from flask import make_response
 import logging
 
@@ -30,15 +30,20 @@ def flutterwave_handler(update, bot):
     reference = str(uuid.uuid4())
     payment_list["reference"] = reference
     data = update.callback_query.data
+    name = get_user_name(update.effective_user.id)
+    room = get_user_room(update.effective_user.id)
+    print(name)
     rate = compute_rates(total)
     subtotal = total + rate
-    for i in cart:
+    my_order = f"Order for {name}:  "
+    for i in list(bot.user_data["cart"].items()):
         product = get_product(i[0])
-        my_order += "{} orders of {} at {} paid {}".format(i[1], product[1], (int(product[3]) * i[1]), subtotal)
+        my_order += f" {i[1]} order(s) of {product[1]} at # {int(product[3]) * i[1]} To be delivered to {room} "
+    my_order += f"  Total(plus shipping) = {subtotal}"
     print(my_order)
     link = flutterlink(subtotal, user_id, my_order, reference)
     payment_list["payment_url"] = link
-    reply_keyboard = [[InlineKeyboardButton(text="YES", callback_data="yes")], [InlineKeyboardButton(text="NO", callback_data="no")]]
+    reply_keyboard = [[InlineKeyboardButton(text="YES", callback_data="yes")], [InlineKeyboardButton(text="NO", callback_data="no")],  [InlineKeyboardButton(text="Back to Home!", callback_data="start")]]
     markup = InlineKeyboardMarkup(reply_keyboard)
     bot.bot.send_message(chat_id=update.effective_chat.id, text=f"please make payments using this link: \n\n{link} \n Have you made payments?", reply_markup=markup)
     return CONFIRMATION
@@ -56,12 +61,13 @@ def handle_payment_confirmation(update, bot):
         status_value = status_check(status)
         if (status_value == True):
             print("it was true")
+            bot.user_data["cart"] = {}
             bot.bot.send_message(chat_id=update.effective_chat.id, text="Your order is being processed")
             return ConversationHandler.END
         else:
             print("it was false")
             link = payment_list["payment_url"]
-            reply_keyboard = [[InlineKeyboardButton(text="YES", callback_data="yes")], [InlineKeyboardButton(text="NO", callback_data="no")]]
+            reply_keyboard = [[InlineKeyboardButton(text="YES", callback_data="yes")], [InlineKeyboardButton(text="NO", callback_data="no")],  [InlineKeyboardButton(text="Back to Home!", callback_data="start")]]
             markup = InlineKeyboardMarkup(reply_keyboard)
             bot.bot.send_message(chat_id=update.effective_chat.id, text=f"Your payment hasn't been confirmed. \nPlease make your payment using the link provided. \n\n{link} \n have you made payments?", reply_markup=markup)
             return CONFIRMATION

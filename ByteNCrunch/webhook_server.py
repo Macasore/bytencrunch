@@ -1,10 +1,10 @@
 from flask import Flask, render_template, request, make_response, jsonify
-import os
+import os, telegram
 import json
-from database.query import update_status
+from database.query import update_status, get_order
 import requests
 from dotenv.main import load_dotenv
-
+from threading import Thread
 load_dotenv()
 
 app = Flask(__name__)
@@ -33,8 +33,10 @@ def flutterwave_webhook():
             print("testing")
             telegram_token = os.getenv("TOKEN")
             group_id = os.getenv("order_group_id")
-            message = f"Payment successful for reference: {reference} with email: {email}"
-            requests.get(f"https://api.telegram.org/bot{telegram_token}/sendMessage?chat_id={group_id}&text={message}")
+            order = get_order(reference)
+            order += f"\n #flutterwavePayment"
+            bot = telegram.Bot(token=os.getenv("TOKEN"))
+            bot.send_message(chat_id=os.getenv("order_group_id"), text=order)
             return (response)
             
         except:
@@ -48,9 +50,13 @@ def flutterwave_webhook():
 def redirect():
     return render_template('redirect.html')
 
+def run_flask_server():
+    app.run(host='0.0.0.0', port=int(os.getenv('PORT', 5000)))
 
 
 if __name__ == '__main__':
+    flask_thread = Thread(target=run_flask_server)
+    flask_thread.start()
     port = os.getenv('PORT')
     print(port)
     app.run(host='0.0.0.0',port=port)

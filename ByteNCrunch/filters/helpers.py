@@ -42,7 +42,7 @@ def cart_to_lol(cart):
 
 
 def flutterlink(subtotal, user_id, my_order, reference):
-    payment = FlutterPayment(amount=subtotal, reference=reference, order_item=my_order)
+    payment = FlutterPayment(amount=subtotal, reference=reference, order_item=my_order, user_id=user_id)
     payment.save()
     student = get_student(user_id)
     print(student)
