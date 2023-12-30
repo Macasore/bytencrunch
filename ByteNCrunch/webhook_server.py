@@ -13,7 +13,7 @@ app = Flask(__name__)
 def flutterwave_webhook():
     data = request.get_json()
     secret_hash = os.getenv("FLW_SECRET_HASH")
-    signature = request.headers.get("verifi-hash")
+    signature = request.headers.get("verif-hash")
 
     if signature is None or (signature != secret_hash):
         return make_response("Unauthorized", 401)
