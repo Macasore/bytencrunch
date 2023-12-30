@@ -91,7 +91,7 @@ def flutterlink(subtotal, user_id, my_order, reference):
         return {"status": "failed", "error": "Payment initialization failed"}
 
 def status_check(status):
-    if (status == "successful"  or status == "SUCCESSFUL"):
+    if status.lower() == "successful":
         return True
     else:
         return False

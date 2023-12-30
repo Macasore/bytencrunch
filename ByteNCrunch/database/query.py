@@ -130,7 +130,7 @@ def get_status(reference):
         "SELECT * FROM flutter_payment WHERE reference=%s",
         (reference,)
     )
-    result = crsr.fetchall()[0]
+    result = crsr.fetchall()[0][5]
     mycon.close()
     return result
 
