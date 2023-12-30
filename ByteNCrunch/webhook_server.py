@@ -22,26 +22,18 @@ def flutterwave_webhook():
 
         payload = request.get_json()
         data = payload
-        print(data)
 
-        status = data["status"]
-        print(status)
-        reference = data["txRef"]
-        print(reference)
+        status = data["data"]["status"]
+        reference = data["data"]["tx_ref"]
 
         if status.lower() == 'successful':
             try:
-                print("start")
                 new_status = update_status(reference, status.lower())
-                print("here")
 
                 # Sends order to the order gc
                 telegram_token = os.getenv("TOKEN")
                 group_id = os.getenv("order_group_id")
-                print("here order")
                 order = get_order(reference)
-                print("okay")
-                print(order)
                 order += f"\n #flutterwavePayment"
                 bot = telegram.Bot(token=telegram_token)
                 bot.send_message(chat_id=group_id, text=order)
@@ -52,7 +44,6 @@ def flutterwave_webhook():
                 return make_response("Internal Server Error", 500)
         else:
             new_status = update_status(reference, status)
-            print(new_status)
             return make_response("Payment Error", 400)
 
     except (KeyError, ValueError) as e:

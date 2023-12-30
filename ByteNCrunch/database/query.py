@@ -141,14 +141,11 @@ def update_status(reference, status_value):
         password=config.DB_PASSWORD,
         database=config.DATABASE
     )
-    print("reached here")
     crsr = mycon.cursor()
-    print("and here")
     crsr.execute(
         "UPDATE flutter_payment SET status=%s WHERE reference=%s",
         (status_value, reference)
     )
-    print("alright")
     mycon.commit()
     mycon.close()
 

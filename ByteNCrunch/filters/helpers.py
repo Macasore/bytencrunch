@@ -56,7 +56,6 @@ def flutterlink(subtotal, user_id, my_order, reference):
     print(student)
     user_email = student[4]
     print(user_email)
-    print("start")
     flutterwave_url = 'https://api.flutterwave.com/v3/payments'
         
     secret_key = os.environ["FLUTTERWAVE_SECRET_KEY"]
