@@ -141,11 +141,14 @@ def update_status(reference, status_value):
         password=config.DB_PASSWORD,
         database=config.DATABASE
     )
+    print("reached here")
     crsr = mycon.cursor()
+    print("and here")
     crsr.execute(
         "UPDATE flutter_payment SET status=%s WHERE reference=%s",
         (status_value, reference)
     )
+    print("alright")
     mycon.commit()
     mycon.close()
 
@@ -202,6 +205,7 @@ def get_user_room(userid):
     return result
 
 def get_order(reference):
+    print("here inside")
     mycon = connector.connect(
     host=os.environ["DB_HOST"],
     user=os.environ["DB_USER"],
@@ -213,6 +217,7 @@ def get_order(reference):
         "SELECT * FROM flutter_payment WHERE reference=%s",
         (reference,)
     )
+    print("here after")
 
     result = crsr.fetchall()[0][2]
     mycon.close()
