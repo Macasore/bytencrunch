@@ -11,40 +11,45 @@ app = Flask(__name__)
 
 @app.route('/flutterwave_webhook', methods=['POST'])
 def flutterwave_webhook():
-    data = request.get_json()
-    secret_hash = os.getenv("FLW_SECRET_HASH")
-    signature = request.headers.get("verif-hash")
+    """Processes Flutterwave payment webhooks."""
 
-    if signature is None or (signature != secret_hash):
-        return make_response("Unauthorized", 401)
+    try:
+        secret_hash = os.getenv("FLW_SECRET_HASH")
+        signature = request.headers.get("verif-hash")
 
-    payload = request.get_data(as_text=True)
-    response = make_response("OK", 200)
+        if not signature or signature != secret_hash:
+            return make_response("Unauthorized", 401)
 
-    data = json.loads(payload)
-    status = data["status"]
-    reference = data["txRef"]
-    
-    if status == 'successful' or status == 'SUCCESSFUL':
+        payload = request.get_json()
+        data = payload
 
-        try:
+        status = data["status"]
+        reference = data["txRef"]
+
+        if status.lower() == 'successful':
+            try:
+                new_status = update_status(reference, status)
+
+                # Sends order to the order gc
+                telegram_token = os.getenv("TOKEN")
+                group_id = os.getenv("order_group_id")
+                order = get_order(reference)
+                order += f"\n #flutterwavePayment"
+                bot = telegram.Bot(token=telegram_token)
+                bot.send_message(chat_id=group_id, text=order)
+
+                return make_response("OK", 200)
+            except Exception as e:
+                print("Error processing successful payment:", e)
+                return make_response("Internal Server Error", 500)
+        else:
             new_status = update_status(reference, status)
-            print("testing")
-            telegram_token = os.getenv("TOKEN")
-            group_id = os.getenv("order_group_id")
-            order = get_order(reference)
-            order += f"\n #flutterwavePayment"
-            bot = telegram.Bot(token=os.getenv("TOKEN"))
-            bot.send_message(chat_id=os.getenv("order_group_id"), text=order)
-            return (response)
-            
-        except:
-           print("error")
-        
-    else:
-        new_status = update_status(reference, status)
-        return response
-    
+            return make_response("Payment Error", 400)
+
+    except (KeyError, ValueError) as e:
+        print("Error processing webhook data:", e)
+        return make_response("Bad Request", 400)
+ 
 @app.route('/redirect', methods=['GET'])
 def redirect():
     return render_template('redirect.html')
