@@ -44,7 +44,7 @@ def flutterwave_webhook():
                 print(order)
                 order += f"\n #flutterwavePayment"
                 bot = telegram.Bot(token=telegram_token)
-                bot.send_message(chat_id=group_id, text="yam")
+                bot.send_message(chat_id=group_id, text=order)
 
                 return make_response("OK", 200)
             except Exception as e:
