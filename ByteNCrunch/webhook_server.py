@@ -22,7 +22,6 @@ def flutterwave_webhook():
     response = make_response("OK", 200)
 
     data = json.loads(payload)
-    email = data["customer"]["email"]
     status = data["status"]
     reference = data["txRef"]
     
