@@ -180,7 +180,6 @@ def get_user_name(userid):
 
     result = crsr.fetchall()[0][2]
     mycon.close()
-    print(result)
     return result
 
 def get_user_room(userid):
@@ -198,11 +197,9 @@ def get_user_room(userid):
 
     result = crsr.fetchall()[0][5]
     mycon.close()
-    print(result)
     return result
 
 def get_order(reference):
-    print("here inside")
     mycon = connector.connect(
     host=os.environ["DB_HOST"],
     user=os.environ["DB_USER"],
@@ -214,9 +211,7 @@ def get_order(reference):
         "SELECT * FROM flutter_payment WHERE reference=%s",
         (reference,)
     )
-    print("here after")
 
     result = crsr.fetchall()[0][2]
     mycon.close()
-    print(result)
     return result

@@ -53,9 +53,7 @@ def flutterlink(subtotal, user_id, my_order, reference):
     payment = FlutterPayment(amount=subtotal, reference=reference, order_item=my_order, user_id=user_id)
     payment.save()
     student = get_student(user_id)
-    print(student)
     user_email = student[4]
-    print(user_email)
     flutterwave_url = 'https://api.flutterwave.com/v3/payments'
         
     secret_key = os.environ["FLUTTERWAVE_SECRET_KEY"]
@@ -83,8 +81,6 @@ def flutterlink(subtotal, user_id, my_order, reference):
 
     if flutterwave_response.get('status', False):
         payment_url = flutterwave_response['data']['link']
-        print(payment_url)
-        print("Got payment url")
         return payment_url
     else:
         print("Failed to get payment url")

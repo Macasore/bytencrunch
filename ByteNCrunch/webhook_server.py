@@ -62,5 +62,4 @@ if __name__ == '__main__':
     flask_thread = Thread(target=run_flask_server)
     flask_thread.start()
     port = os.getenv('PORT')
-    print(port)
     app.run(host='0.0.0.0',port=port)
