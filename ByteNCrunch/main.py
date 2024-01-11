@@ -24,8 +24,8 @@ if __name__ == "__main__":
                     )
     # delete_table(order_item_schema[0])
     # delete_table(order_schema[0])
-    redo_table(order_schema)
-    redo_table(order_item_schema)
+    # redo_table(order_schema)
+    # redo_table(order_item_schema)
     updater = Updater(os.getenv("TOKEN"))
     updater_two  = Updater("6911099761:AAFzK5qM-JowUTHD1-SG_P9QJPfKjflS5_4")
     dispatcher_two = updater_two.dispatcher
