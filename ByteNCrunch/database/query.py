@@ -276,7 +276,7 @@ def get_todays_orders():
     return today_orders
 
 def fetch_todays_orders():
-    all_orders = get_all_orders()
+    all_orders = get_todays_orders()
     all_orders = [[k for k in i] for i in all_orders]
     print(all_orders)
     all_order_items = get_all_order_items()
