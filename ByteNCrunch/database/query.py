@@ -1,5 +1,6 @@
 import mysql.connector as connector
 from dotenv.main import load_dotenv
+from datetime import datetime
 # from .models import User, Student
 import os
 import config
@@ -215,3 +216,99 @@ def get_order(reference):
     result = crsr.fetchall()[0][2]
     mycon.close()
     return result
+
+def get_all_orders():
+    mycon = connector.connect(
+    host=os.environ["DB_HOST"],
+    user=os.environ["DB_USER"],
+    password=os.environ["DB_PASSWORD"],
+    database=os.environ["DATABASE"]
+    )
+    crsr = mycon.cursor()
+    crsr.execute(
+        "SELECT * FROM orders"
+    )
+
+    result = crsr.fetchall()
+    mycon.close()
+    return result
+
+def get_all_flutter_orders():
+    mycon = connector.connect(
+    host=os.environ["DB_HOST"],
+    user=os.environ["DB_USER"],
+    password=os.environ["DB_PASSWORD"],
+    database=os.environ["DATABASE"]
+    )
+    crsr = mycon.cursor()
+    crsr.execute(
+        "SELECT * FROM flutter_payment"
+    )
+
+    result = crsr.fetchall()
+    mycon.close()
+    return result
+
+def get_all_order_items():
+    mycon = connector.connect(
+    host=os.environ["DB_HOST"],
+    user=os.environ["DB_USER"],
+    password=os.environ["DB_PASSWORD"],
+    database=os.environ["DATABASE"]
+    )
+    crsr = mycon.cursor()
+    crsr.execute(
+        "SELECT * FROM order_item"
+    )
+
+    result = crsr.fetchall()
+    mycon.close()
+    return result
+
+def get_todays_orders():
+    today = datetime.date(datetime.today()).isoformat()
+    all_orders = get_all_orders()
+    today_orders = []
+    for my_order in all_orders:
+        if my_order[-1].isoformat() == today:
+            today_orders.append(my_order)
+
+    return today_orders
+
+def fetch_todays_orders():
+    all_orders = get_all_orders()
+    all_orders = [[k for k in i] for i in all_orders]
+    print(all_orders)
+    all_order_items = get_all_order_items()
+    all_order_items = [[k for k in i]  for i in all_order_items]
+    for i in all_orders:
+        my_id = i[0]
+        cusctomer = get_student(i[1])
+        room = cusctomer[4]
+        name = cusctomer[2]
+        the_order = i
+        my_items = []
+        for j in all_order_items:
+            if j[2] == my_id:
+                my_items.append((j[1], j[3]))
+                print(j)
+
+        my_order = f"Order for {name}:  "
+        print(my_items)
+        for k in my_items:
+            product = get_product(i[0])
+            my_order += f" {k[1]} order(s) of {product[1]} at # {int(product[3]) * k[1]} To be delivered to {room} "
+            my_order += f"  Total(plus shipping) = {i[3]}"
+        all_orders[all_orders.index(i)].append(my_order)
+
+    return all_orders
+
+def fetch_todays_fluter_orders():
+    today = datetime.date(datetime.today()).isoformat()
+    all_orders = get_all_flutter_orders()
+    today_orders = []
+    for my_order in all_orders:
+        if my_order[-1].isoformat() == today:
+            today_orders.append(my_order)
+
+    return today_orders
