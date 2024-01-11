@@ -47,6 +47,44 @@ def recompute_total(cart):
         total += (value * prod[3])
     return total
 
+def redo_table(schema):
+    mycon = connector.connect(
+    host=os.environ["DB_HOST"],
+    user=os.environ["DB_USER"],
+    password=os.environ["DB_PASSWORD"],
+    database=os.environ["DATABASE"]
+    )
+    command = "CREATE TABLE IF NOT EXISTS {} ({})".format(schema[0], schema[1])
+
+    # userid = user.userid
+    # role = user.role
+    crsr = mycon.cursor()
+    
+    crsr.execute(
+        command
+    )
+    mycon.commit()
+
+    mycon.close()
+    print(f"created {schema[0]}")
+
+def delete_table(name):
+    mycon = connector.connect(
+    host=os.environ["DB_HOST"],
+    user=os.environ["DB_USER"],
+    password=os.environ["DB_PASSWORD"],
+    database=os.environ["DATABASE"]
+    )
+    command = " DROP TABLE IF EXISTS `{}`".format(name)
+
+    crsr = mycon.cursor()
+    crsr.execute(
+        command
+    )
+    mycon.commit()
+
+    mycon.close()
+    print(f"deleted {name}")
 
 
 def flutterlink(subtotal, user_id, my_order, reference):
