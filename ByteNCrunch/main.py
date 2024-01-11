@@ -22,8 +22,8 @@ if __name__ == "__main__":
         "order_item",
         "id INT AUTO_INCREMENT PRIMARY KEY, product_id INT, order_id INT, item_count INT, FOREIGN KEY (product_id) REFERENCES product(id), FOREIGN KEY (order_id) REFERENCES orders(id)"
                     )
-    delete_table(order_item_schema[0])
-    delete_table(order_schema[0])
+    # delete_table(order_item_schema[0])
+    # delete_table(order_schema[0])
     redo_table(order_schema)
     redo_table(order_item_schema)
     updater = Updater(os.getenv("TOKEN"))
