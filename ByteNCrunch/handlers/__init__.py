@@ -8,6 +8,7 @@ from .browse_food import browse_product_handler, browse_product_ext_handler
 from .cart import add_to_cart_handler, cart_quantity_handler, confirm_cart, manage_cart_handler , edit_cart_handler
 from .payment import flutterwave_payment_handler
 from .checkout import check_out_handler, direct_transfer_handler,confirm_direct_transfer_handler
+from .admin import fetch_from_direct_transfer_handler, fetch_from_flutter_handler
 
 all_handlers = [
     #user handlers
@@ -44,4 +45,10 @@ all_handlers = [
     #flutterwave
     flutterwave_payment_handler,
 
+]
+
+admin_handlers = [
+    #get orders
+    fetch_from_direct_transfer_handler,
+    fetch_from_flutter_handler,
 ]
