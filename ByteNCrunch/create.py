@@ -32,7 +32,7 @@ tables = {
     "student" : "role CHAR(120), userid BIGINT PRIMARY KEY, name VARCHAR(120), matno CHAR(15) UNIQUE,email VARCHAR(70), room VARCHAR(255), account_number CHAR(10), bank CHAR(180)",
     "vendor" : "userid BIGINT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(120), UNIQUE (name)",
     "product" : "id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(120), vendorID BIGINT, price INT,options TEXT, FOREIGN KEY (vendorID) REFERENCES vendor(userid)",
-    "orders" : "id INT AUTO_INCREMENT PRIMARY KEY , customer_id BIGINT, customer_name VARCHAR(120), ammount_paid INT,  FOREIGN KEY (customer_id) REFERENCES student(userid)",
+    "orders" : "id INT AUTO_INCREMENT PRIMARY KEY , customer_id BIGINT, customer_name VARCHAR(120), ammount_paid INT, created_at DATETIME DEFAULT CURRENT_TIMESTAMP,  FOREIGN KEY (customer_id) REFERENCES student(userid)",
     "order_item" : "id INT AUTO_INCREMENT PRIMARY KEY, product_id INT, order_id INT, item_count INT, FOREIGN KEY (product_id) REFERENCES product(id), FOREIGN KEY (order_id) REFERENCES orders(id)",
     # "user" : " userid BIGINT PRIMARY KEY, role CHAR(120) "
 
