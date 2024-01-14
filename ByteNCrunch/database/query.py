@@ -14,7 +14,9 @@ def is_user(userid = None) -> bool:
     host= config.DB_HOST,
     user=config.DB_USER,
     password=config.DB_PASSWORD,
-    database=config.DATABASE
+    database=config.DATABASE,
+    port=os.environ["DB_PORT"],
+    ssl_disabled=True
     )
 
     crsr = mycon.cursor()
@@ -36,7 +38,9 @@ def get_all_vendors():
     host= config.DB_HOST,
     user=config.DB_USER,
     password=config.DB_PASSWORD,
-    database=config.DATABASE
+    database=config.DATABASE,
+    port=os.environ["DB_PORT"],
+    ssl_disabled=True
     )
     crsr = mycon.cursor()
     crsr.execute(
@@ -51,7 +55,9 @@ def get_product(product_id):
     host= config.DB_HOST,
     user=config.DB_USER,
     password=config.DB_PASSWORD,
-    database=config.DATABASE
+    database=config.DATABASE,
+    port=os.environ["DB_PORT"],
+    ssl_disabled=True
     )
     # "id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(120), image LONGBLOB, description VARCHAR(800), vendorID BIGINT, available BOOL, price INT, FOREIGN KEY (vendorID) REFERENCES vendor(userid)"
     crsr = mycon.cursor()
@@ -70,7 +76,9 @@ def get_all_products() -> list:
     host= config.DB_HOST,
     user=config.DB_USER,
     password=config.DB_PASSWORD,
-    database=config.DATABASE
+    database=config.DATABASE,
+    port=os.environ["DB_PORT"],
+    ssl_disabled=True
     )
     crsr = mycon.cursor()
     crsr.execute(
@@ -89,7 +97,9 @@ def get_products_from(myid):
     host=os.environ["DB_HOST"],
     user=os.environ["DB_USER"],
     password=os.environ["DB_PASSWORD"],
-    database=os.environ["DATABASE"]
+    database=os.environ["DATABASE"],
+    port=os.environ["DB_PORT"],
+    ssl_disabled=True
     )
     crsr = mycon.cursor()
     crsr.execute(
@@ -107,7 +117,9 @@ def get_student(userid):
     host= config.DB_HOST,
     user=config.DB_USER,
     password=config.DB_PASSWORD,
-    database=config.DATABASE
+    database=config.DATABASE,
+    port=os.environ["DB_PORT"],
+    ssl_disabled=True
     )
 
     crsr = mycon.cursor()
@@ -124,7 +136,9 @@ def get_status(reference):
         host= config.DB_HOST,
         user= config.DB_USER,
         password= config.DB_PASSWORD,
-        database= config.DATABASE
+        database= config.DATABASE,
+        port=os.environ["DB_PORT"],
+    sssl_disabled=True
     )
     crsr = mycon.cursor()
     crsr.execute(
@@ -140,7 +154,9 @@ def update_status(reference, status_value):
         host=config.DB_HOST,
         user=config.DB_USER,
         password=config.DB_PASSWORD,
-        database=config.DATABASE
+        database=config.DATABASE,
+        port=os.environ["DB_PORT"],
+    ssl_disabled=True
     )
     crsr = mycon.cursor()
     crsr.execute(
@@ -155,7 +171,9 @@ def get_last_order(dets):
     host=os.environ["DB_HOST"],
     user=os.environ["DB_USER"],
     password=os.environ["DB_PASSWORD"],
-    database=os.environ["DATABASE"]
+    database=os.environ["DATABASE"],
+    port=os.environ["DB_PORT"],
+    ssl_disabled=True
     )
     crsr = mycon.cursor()
     crsr.execute(
@@ -171,7 +189,9 @@ def get_user_name(userid):
     host=os.environ["DB_HOST"],
     user=os.environ["DB_USER"],
     password=os.environ["DB_PASSWORD"],
-    database=os.environ["DATABASE"]
+    database=os.environ["DATABASE"],
+    port=os.environ["DB_PORT"],
+    ssl_disabled=True
     )
     crsr = mycon.cursor()
     crsr.execute(
@@ -188,7 +208,9 @@ def get_user_room(userid):
     host=os.environ["DB_HOST"],
     user=os.environ["DB_USER"],
     password=os.environ["DB_PASSWORD"],
-    database=os.environ["DATABASE"]
+    database=os.environ["DATABASE"],
+    port=os.environ["DB_PORT"],
+    ssl_disabled=True
     )
     crsr = mycon.cursor()
     crsr.execute(
@@ -205,7 +227,9 @@ def get_order(reference):
     host=os.environ["DB_HOST"],
     user=os.environ["DB_USER"],
     password=os.environ["DB_PASSWORD"],
-    database=os.environ["DATABASE"]
+    database=os.environ["DATABASE"],
+    port=os.environ["DB_PORT"],
+    ssl_disabled=True
     )
     crsr = mycon.cursor()
     crsr.execute(
@@ -222,7 +246,9 @@ def get_all_orders():
     host=os.environ["DB_HOST"],
     user=os.environ["DB_USER"],
     password=os.environ["DB_PASSWORD"],
-    database=os.environ["DATABASE"]
+    database=os.environ["DATABASE"],
+    port=os.environ["DB_PORT"],
+    ssl_disabled=True
     )
     crsr = mycon.cursor()
     crsr.execute(
@@ -238,7 +264,9 @@ def get_all_flutter_orders():
     host=os.environ["DB_HOST"],
     user=os.environ["DB_USER"],
     password=os.environ["DB_PASSWORD"],
-    database=os.environ["DATABASE"]
+    database=os.environ["DATABASE"],
+    port=os.environ["DB_PORT"],
+    ssl_disabled=True
     )
     crsr = mycon.cursor()
     crsr.execute(
@@ -254,7 +282,9 @@ def get_all_order_items():
     host=os.environ["DB_HOST"],
     user=os.environ["DB_USER"],
     password=os.environ["DB_PASSWORD"],
-    database=os.environ["DATABASE"]
+    database=os.environ["DATABASE"],
+    port=os.environ["DB_PORT"],
+    ssl_disabled=True
     )
     crsr = mycon.cursor()
     crsr.execute(

@@ -69,7 +69,9 @@ class FlutterPayment:
             host=os.environ["DB_HOST"],
             user=os.environ["DB_USER"],
             password=os.environ["DB_PASSWORD"],
-            database=os.environ["DATABASE"]
+            database=os.environ["DATABASE"],
+            port=os.environ["DB_PORT"],
+            ssl_disabled=True
         )
 
         mycursor = mycon.cursor()

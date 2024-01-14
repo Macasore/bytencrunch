@@ -13,7 +13,9 @@ def commit_user(user:User):
     host=os.environ["DB_HOST"],
     user=os.environ["DB_USER"],
     password=os.environ["DB_PASSWORD"],
-    database=os.environ["DATABASE"]
+    database=os.environ["DATABASE"],
+    port=os.environ["DB_PORT"],
+    ssl_disabled=True
     )
 
     userid = user.userid
@@ -33,7 +35,9 @@ def commmit_student(student:Student):
     host=os.environ["DB_HOST"],
     user=os.environ["DB_USER"],
     password=os.environ["DB_PASSWORD"],
-    database=os.environ["DATABASE"]
+    database=os.environ["DATABASE"],
+    port=os.environ["DB_PORT"],
+    ssl_disabled=True
     )
 
     role = student.role
@@ -56,7 +60,9 @@ def commit_order(cust_id, cust_name, ammount):
     host=os.environ["DB_HOST"],
     user=os.environ["DB_USER"],
     password=os.environ["DB_PASSWORD"],
-    database=os.environ["DATABASE"]
+    database=os.environ["DATABASE"],
+    port=os.environ["DB_PORT"],
+    ssl_disabled=True
     )
     mycursor = mycon.cursor()
     mycursor.execute(
@@ -71,7 +77,9 @@ def commit_order_item(product_id, quantity, order_id,):
     host=os.environ["DB_HOST"],
     user=os.environ["DB_USER"],
     password=os.environ["DB_PASSWORD"],
-    database=os.environ["DATABASE"]
+    database=os.environ["DATABASE"],
+    port=os.environ["DB_PORT"],
+    ssl_disabled=True
     )
     mycursor = mycon.cursor()
     mycursor.execute(
@@ -95,7 +103,9 @@ def update_room(user_id, room):
     host=os.environ["DB_HOST"],
     user=os.environ["DB_USER"],
     password=os.environ["DB_PASSWORD"],
-    database=os.environ["DATABASE"]
+    database=os.environ["DATABASE"],
+    port=os.environ["DB_PORT"],
+    ssl_disabled=True
     )
 
     crsr = mycon.cursor()

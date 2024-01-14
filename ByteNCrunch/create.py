@@ -8,7 +8,9 @@ def create_database():
     mydb = connector.connect(
         host=os.environ["DB_HOST"],
         user=os.environ["DB_USER"],
-        password=os.environ["DB_PASSWORD"]
+        password=os.environ["DB_PASSWORD"],
+        port=os.environ["DB_PORT"],
+        ssl_disabled=True
     )
     mycursor = mydb.cursor()
     mycursor.execute("CREATE DATABASE IF NOT EXISTS {}".format(os.environ["DATABASE"]))
@@ -20,7 +22,9 @@ def create_table( name, fields):
         host=os.environ["DB_HOST"],
         user=os.environ["DB_USER"],
         password=os.environ["DB_PASSWORD"],
-        database=os.environ["DATABASE"]
+        database=os.environ["DATABASE"],
+        port=os.environ["DB_PORT"],
+        ssl_disabled=True
     )
 
     operation = "CREATE TABLE IF NOT EXISTS {} ({})".format(name, fields)
@@ -53,7 +57,9 @@ def add_vendor(vendor):
     host=os.environ["DB_HOST"],
     user=os.environ["DB_USER"],
     password=os.environ["DB_PASSWORD"],
-    database=os.environ["DATABASE"]
+    database=os.environ["DATABASE"],
+    port=os.environ["DB_PORT"],
+    ssl_disabled=True
     )
     mycursor = mycon.cursor()
     mycursor.execute(
@@ -67,7 +73,9 @@ def find_vendorid(vendor):
     host=os.environ["DB_HOST"],
     user=os.environ["DB_USER"],
     password=os.environ["DB_PASSWORD"],
-    database=os.environ["DATABASE"]
+    database=os.environ["DATABASE"],
+    port=os.environ["DB_PORT"],
+    ssl_disabled=True
     )
 
     crsr = mycon.cursor()
@@ -85,7 +93,9 @@ def add_product(item,price,vendor,options):
     host=os.environ["DB_HOST"],
     user=os.environ["DB_USER"],
     password=os.environ["DB_PASSWORD"],
-    database=os.environ["DATABASE"]
+    database=os.environ["DATABASE"],
+    port=os.environ["DB_PORT"],
+    ssl_disabled=True
     )
     crsr = mycon.cursor()
     vendorID = find_vendorid(vendor)
