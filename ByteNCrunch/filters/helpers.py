@@ -19,16 +19,16 @@ load_dotenv()
 
 def compute_rates(price):
     rate = 0
-    if price < 200:
+    if price <= 1000:
         rate = 250
-    elif price in range(200-1,800):
-        rate = 300
-    elif price in range(800-1,1500):
-        rate = 400
-    elif price in range(1500-1,3000):
-        rate = 500
-    elif price >= 3000:
-        rate = 700
+    elif price in range(1050-2500):
+        rate = 350
+    elif price in range(2550-4000):
+        rate = 450
+    elif price in range(4050-5500):
+        rate = 550
+    elif price > 5550:
+        rate = 600
 
     return rate
 
