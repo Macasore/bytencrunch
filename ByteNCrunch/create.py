@@ -63,9 +63,10 @@ def add_vendor(vendor):
     )
     mycursor = mycon.cursor()
     mycursor.execute(
-        "INSERT INTO vendor (name) VALUES (%s)",
-        (vendor,)
-         )
+    "INSERT INTO vendor (name) VALUES (%s) "
+    "ON DUPLICATE KEY UPDATE name=VALUES(name)",
+    (vendor,)
+)
     mycon.commit()
     mycon.close()
 def find_vendorid(vendor):
@@ -101,9 +102,10 @@ def add_product(item,price,vendor,options):
     vendorID = find_vendorid(vendor)
     print(vendorID)
     crsr.execute(
-        "INSERT INTO product (name, vendorID,options, price) VALUES (%s,%s,%s,%s)",
-        ( item.strip(), vendorID,options, price)
-    )
+    "INSERT INTO product (name, vendorID, options, price) VALUES (%s, %s, %s, %s) "
+    "ON DUPLICATE KEY UPDATE vendorID=VALUES(vendorID), options=VALUES(options), price=VALUES(price)",
+    (item.strip(), vendorID, options, price)
+)
     mycon.commit()
     mycon.close()
 
@@ -126,4 +128,4 @@ create_database()
 for key, val in tables.items():
     create_table(key, val)
 
-populate_vendor_and_product("menu.csv")
+populate_vendor_and_product("menu2.csv")
