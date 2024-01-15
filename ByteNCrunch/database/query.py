@@ -300,7 +300,7 @@ def get_todays_orders():
     all_orders = get_all_orders()
     today_orders = []
     for my_order in all_orders:
-        if my_order[-1].isoformat() == today:
+        if datetime.date(my_order[-1]).isoformat() == today:
             today_orders.append(my_order)
 
     return today_orders
@@ -338,7 +338,7 @@ def fetch_todays_fluter_orders():
     all_orders = get_all_flutter_orders()
     today_orders = []
     for my_order in all_orders:
-        if my_order[-1].isoformat() == today:
+        if datetime.date(my_order[-1]).isoformat() == today:
             today_orders.append(my_order)
 
     return today_orders
