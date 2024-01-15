@@ -18,9 +18,9 @@ def checkout(update, bot):
     total = int(bot.user_data["cart_total"])
     rate = compute_rates(total)
     reply_keyboard = [
-        [
-            InlineKeyboardButton(text="Bank tranfer to Byte n Crunch", callback_data="pay_with_direct_transfer")
-        ] ,
+        # [
+        #     InlineKeyboardButton(text="Bank tranfer to Byte n Crunch", callback_data="pay_with_direct_transfer")
+        # ] ,
         [
             InlineKeyboardButton(text="Pay with Flutterwave", callback_data="pay_with_flutter_wave")
         ],
