@@ -21,11 +21,11 @@ def compute_rates(price):
     rate = 0
     if price <= 1000:
         rate = 250
-    elif price in range(1050-2500):
+    elif price in range(1050-1, 2500):
         rate = 350
-    elif price in range(2550-4000):
+    elif price in range(2550-1, 4000):
         rate = 450
-    elif price in range(4050-5500):
+    elif price in range(4050-1, 5500):
         rate = 550
     elif price > 5550:
         rate = 600
