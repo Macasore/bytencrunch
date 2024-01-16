@@ -48,16 +48,21 @@ def direct_transfer(update, bot):
             InlineKeyboardButton(text="Back to home!", callback_data="start")
         ]
     ]
+         markup = InlineKeyboardMarkup(reply_keyboard)
+         query.edit_message_text(
+            text=text_to_send,
+            reply_markup=markup,
+        )
     else:
         
-        total = int(bot.user_data["cart_total"])
-        rate = compute_rates(total)
-        total += rate
-        acc_name = os.environ["ACCOUNT_NAME"]
-        acc_no =  os.environ["ACCOUNT_NUMBER"]
-        bank =  os.environ["BANK"]
-        text_to_send = f"Make a tranfer of #{total} to the account given below: \n Account Name = {acc_name} \n Account Number = {acc_no} \n Bank = {bank}"
-        reply_keyboard = [
+         total = int(bot.user_data["cart_total"])
+         rate = compute_rates(total)
+         total += rate
+         acc_name = os.environ["ACCOUNT_NAME"]
+         acc_no =  os.environ["ACCOUNT_NUMBER"]
+         bank =  os.environ["BANK"]
+         text_to_send = f"Make a tranfer of #{total} to the account given below: \n Account Name = {acc_name} \n Account Number = {acc_no} \n Bank = {bank}"
+         reply_keyboard = [
              [
                 InlineKeyboardButton(text="I've made the Transfer!", callback_data="direct_payment_confirm")
             ],
@@ -65,11 +70,11 @@ def direct_transfer(update, bot):
                 InlineKeyboardButton(text="Back to home!", callback_data="start")
             ]
         ]
-    markup = InlineKeyboardMarkup(reply_keyboard)
-    query.edit_message_text(
-        text=text_to_send,
-        reply_markup=markup,
-    )
+         markup = InlineKeyboardMarkup(reply_keyboard)
+         query.edit_message_text(
+            text=text_to_send,
+            reply_markup=markup,
+        )
 
 def confirm_direct_transfer(update, bot):
     query = update.callback_query
