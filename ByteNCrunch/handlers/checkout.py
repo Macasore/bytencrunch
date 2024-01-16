@@ -14,26 +14,56 @@ load_dotenv()
 
 
 def checkout(update, bot):
+    time_limit_upper = 6
+    time_limit_lower = 13
+    current_time = datetime.now().strftime("%Y-%m-%d, %H:%M").split(",")[1].split(":")[0].strip()
+    ct_int = int(current_time)
     query = update.callback_query
-    # data = update.callback_query.data
-    total = int(bot.user_data["cart_total"])
-    rate = compute_rates(total)
-    reply_keyboard = [
-        [
-            InlineKeyboardButton(text="Bank tranfer to Byte n Crunch", callback_data="pay_with_direct_transfer")
-        ] ,
-        [
-            InlineKeyboardButton(text="Pay with Flutterwave", callback_data="pay_with_flutter_wave")
-        ],
+    if ct_int >= time_limit_lower :
+         text_to_send = f"Hi there! \n We're currently resting for the day, pleease come back between 8am and 4pm "
+         reply_keyboard = [
          [
             InlineKeyboardButton(text="Back to home!", callback_data="start")
         ]
     ]
-    markup = InlineKeyboardMarkup(reply_keyboard)
-    query.edit_message_text(
-        text=f"You total comes down to # {total+rate} \n Subtotal: #{total} \n Shipping : #{rate}",
-        reply_markup=markup,
-    )
+         markup = InlineKeyboardMarkup(reply_keyboard)
+         query.edit_message_text(
+            text=text_to_send,
+            reply_markup=markup,
+        )
+    elif  ct_int <= time_limit_upper:
+         text_to_send = f"Hi there! \n We're currently resting for the day, pleease come back between 8am and 4pm "
+         reply_keyboard = [
+         [
+            InlineKeyboardButton(text="Back to home!", callback_data="start")
+        ]
+    ]
+         markup = InlineKeyboardMarkup(reply_keyboard)
+         query.edit_message_text(
+            text=text_to_send,
+            reply_markup=markup,
+        )
+    else:
+
+        # data = update.callback_query.data
+        total = int(bot.user_data["cart_total"])
+        rate = compute_rates(total)
+        reply_keyboard = [
+            [
+                InlineKeyboardButton(text="Bank tranfer to Byte n Crunch", callback_data="pay_with_direct_transfer")
+            ] ,
+            [
+                InlineKeyboardButton(text="Pay with Flutterwave", callback_data="pay_with_flutter_wave")
+            ],
+             [
+                InlineKeyboardButton(text="Back to home!", callback_data="start")
+            ]
+        ]
+        markup = InlineKeyboardMarkup(reply_keyboard)
+        query.edit_message_text(
+            text=f"You total comes down to # {total+rate} \n Subtotal: #{total} \n Shipping : #{rate}",
+            reply_markup=markup,
+        )
 
 def direct_transfer(update, bot):
     time_limit_upper = 6
