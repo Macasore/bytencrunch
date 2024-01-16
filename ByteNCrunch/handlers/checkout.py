@@ -41,7 +41,19 @@ def direct_transfer(update, bot):
     current_time = datetime.now().strftime("%Y-%m-%d, %H:%M").split(",")[1].split(":")[0].strip()
     ct_int = int(current_time)
     query = update.callback_query
-    if ct_int >= time_limit_lower | ct_int <= time_limit_upper:
+    if ct_int >= time_limit_lower :
+         text_to_send = f"Hi there! \n We're currently resting for the day, pleease come back between 8am and 4pm "
+         reply_keyboard = [
+         [
+            InlineKeyboardButton(text="Back to home!", callback_data="start")
+        ]
+    ]
+         markup = InlineKeyboardMarkup(reply_keyboard)
+         query.edit_message_text(
+            text=text_to_send,
+            reply_markup=markup,
+        )
+    elif  ct_int <= time_limit_upper:
          text_to_send = f"Hi there! \n We're currently resting for the day, pleease come back between 8am and 4pm "
          reply_keyboard = [
          [
