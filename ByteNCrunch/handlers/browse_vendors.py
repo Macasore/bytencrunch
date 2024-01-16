@@ -39,7 +39,7 @@ def browse_shops_init(update, bot):
     ]
     markup = InlineKeyboardMarkup(reply_keyboard)
     query.edit_message_text(
-        text="What do you feel like getting today?",
+        text="What do you feel like getting today? \n Hurry up though, we stop taking orders by 4pm",
         reply_markup=markup,
     )
 
