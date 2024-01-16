@@ -138,7 +138,7 @@ def get_status(reference):
         password= config.DB_PASSWORD,
         database= config.DATABASE,
         port=os.environ["DB_PORT"],
-    sssl_disabled=True
+    ssl_disabled=True
     )
     crsr = mycon.cursor()
     crsr.execute(

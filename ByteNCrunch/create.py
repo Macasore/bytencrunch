@@ -103,9 +103,11 @@ def add_product(item,price,vendor,options):
     print(vendorID)
     crsr.execute(
     "INSERT INTO product (name, vendorID, options, price) VALUES (%s, %s, %s, %s) "
-    "ON DUPLICATE KEY UPDATE vendorID=VALUES(vendorID), options=VALUES(options), price=VALUES(price)",
+    "ON DUPLICATE KEY UPDATE vendorID=VALUES(vendorID), options=VALUES(options), "
+    "price=IF(price <> VALUES(price), VALUES(price), price)",
     (item.strip(), vendorID, options, price)
 )
+
     mycon.commit()
     mycon.close()
 
@@ -128,4 +130,4 @@ create_database()
 for key, val in tables.items():
     create_table(key, val)
 
-populate_vendor_and_product("menu2.csv")
+populate_vendor_and_product("menu3.csv")
