@@ -44,21 +44,21 @@ def name(update, context):
     logger.info("THis user chose %s", query.data)
     complaint['category'] = query.data
     query.answer()
-    query.edit_message_text("Please input your full-name: ")
+    query.edit_message_text("Please input your full-name: \n /cancel")
 
     return MATRIC_NO
  
 def name_message(update, context):
     user_message = update.message.text
     logger.info("This user chose %s'", user_message)
-    update.message.reply_text("Please input your full-name: ")
+    update.message.reply_text("Please input your full-name: \n /cancel")
     return MATRIC_NO
 
 def matric_no(update, context):
      query = update.callback_query
      logger.info("THis user's fullname is %s'", update.message.text)
      complaint["full_name"] = update.message.text
-     update.message.reply_text("Please input Matric number: ")
+     update.message.reply_text("Please input Matric number: \n /cancel")
      
      return EMAIL
  
@@ -66,7 +66,7 @@ def email(update, context):
      query = update.callback_query
      logger.info("THis user's matric number is %s'", update.message.text)
      complaint["matric_no"] = update.message.text
-     update.message.reply_text("Please input your email address: ")
+     update.message.reply_text("Please input your email address: \n /cancel")
      
      return HALL
  
@@ -74,7 +74,7 @@ def hall(update, context):
      query = update.callback_query
      logger.info("THis user's email address is %s'", update.message.text)
      complaint["email"] = update.message.text
-     update.message.reply_text("Please enter you hall and room number eg: Daniel E403: ")
+     update.message.reply_text("Please enter you hall and room number eg: Daniel E403: \n /cancel")
      
      return DESCRIPTION
  
@@ -83,7 +83,7 @@ def desc(update, context):
      query = update.callback_query
      logger.info("This user's email is %s'", update.message.text)
      complaint["hall_roomno"] = update.message.text
-     update.message.reply_text("Please input your complaint description: ")
+     update.message.reply_text("Please input your complaint description: \n /cancel")
      
      return SUMMARY
  
@@ -102,7 +102,7 @@ def summary(update, context):
      ]
      print(complaint['description'])
      markup = InlineKeyboardMarkup(reply_keyboard)
-     update.message.reply_text(text="""Here are your details:\n "Category":{} \n Name: {} \n Matric number: {} \n Email: {} \n Room_number: {} \n Complaint: {} \n\n are these details correct?
+     update.message.reply_text(text="""Here are your details:\n "Category":{} \n Name: {} \n Matric number: {} \n Email: {} \n Room_number: {} \n Complaint: {} \n\n are these details correct? \n /cancel
                                
                                """.format(complaint['category'], complaint["full_name"],
                                           complaint["matric_no"], complaint["email"], complaint["hall_roomno"],
