@@ -49,7 +49,7 @@ def browse_shops_init(update, bot):
 
             InlineKeyboardButton(text="Back to Home!", callback_data="start")
         ]]
-    
+    reply_keyboard = buttons
     markup = InlineKeyboardMarkup(reply_keyboard)
     query.edit_message_text(
         text="Sorry we're currently down for maintenance! \n Sorry for the inconvenience, we'll be back in a bit!",
