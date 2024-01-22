@@ -29,7 +29,7 @@ def add_complaint(update, bot):
     ]
     markup = InlineKeyboardMarkup(reply_keyboard)
     query.edit_message_text(
-        text="Please select your complaint category: ", 
+        text="Please select your complaint category: \n /cancel", 
         reply_markup=markup
     )
     user = update.effective_user
