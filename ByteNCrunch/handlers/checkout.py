@@ -61,7 +61,7 @@ def checkout(update, bot):
         ]
         markup = InlineKeyboardMarkup(reply_keyboard)
         query.edit_message_text(
-            text=f"You total comes down to # {total+rate} \n Subtotal: #{total} \n Shipping : #{rate} \n PLease ensure that you have a stable internet condition before proceeding",
+            text=f"You total comes down to # {total+rate} \n Subtotal: #{total} \n Shipping : #{rate} \n Please ensure that you have a good internet condition before proceeding",
             reply_markup=markup,
         )
 
