@@ -6,55 +6,55 @@ from database.query import get_all_vendors
 # *add funtion to fetch product data before sending to browse product handler
 # *integrate with ibiang's api
 
-# def browse_shops_init(update, bot):
-#     query = update.callback_query
-#     vendors = get_all_vendors()
-#     try :
-#         cart = bot.user_data["cart"]
-#     except:
-#         bot.user_data["cart"] = {}
-#         bot.user_data["cart_total"] = 0
-
-#     print(vendors)
-#     bot.user_data["vendors"] = vendors
-#     browse_state = 5
-#     bot.user_data["browse_state"] = browse_state
-#     my_vendors = vendors[0:browse_state]
-#     buttons = []
-#     for vendor in my_vendors:
-#         buttons.append(
-#             [InlineKeyboardButton(text=vendor[1], callback_data=f"browse_shop_{vendor[0]}")]
-#         )
-#     reply_keyboard = buttons + [
-        
-#             [
-#                 InlineKeyboardButton(text="Next", callback_data="browse_vendors_next")
-#             ],
-#             [
-#                 InlineKeyboardButton(text="Manage Cart", callback_data="manage_cart")
-#            ,
-#             InlineKeyboardButton(text="Back to Home!", callback_data="start")
-#         ]
-        
-#     ]
-#     markup = InlineKeyboardMarkup(reply_keyboard)
-#     query.edit_message_text(
-#         text="What do you feel like getting today? \n Hurry up though, we stop taking orders by 4pm",
-#         reply_markup=markup,
-#     )
-
 def browse_shops_init(update, bot):
     query = update.callback_query
-    buttons = [[
+    vendors = get_all_vendors()
+    try :
+        cart = bot.user_data["cart"]
+    except:
+        bot.user_data["cart"] = {}
+        bot.user_data["cart_total"] = 0
 
+    print(vendors)
+    bot.user_data["vendors"] = vendors
+    browse_state = 5
+    bot.user_data["browse_state"] = browse_state
+    my_vendors = vendors[0:browse_state]
+    buttons = []
+    for vendor in my_vendors:
+        buttons.append(
+            [InlineKeyboardButton(text=vendor[1], callback_data=f"browse_shop_{vendor[0]}")]
+        )
+    reply_keyboard = buttons + [
+        
+            [
+                InlineKeyboardButton(text="Next", callback_data="browse_vendors_next")
+            ],
+            [
+                InlineKeyboardButton(text="Manage Cart", callback_data="manage_cart")
+           ,
             InlineKeyboardButton(text="Back to Home!", callback_data="start")
-        ]]
-    reply_keyboard = buttons
+        ]
+        
+    ]
     markup = InlineKeyboardMarkup(reply_keyboard)
     query.edit_message_text(
-        text="Sorry we're currently down for maintenance! \n Sorry for the inconvenience, we'll be back in a bit!",
+        text="What do you feel like getting today? \n Hurry up though, we stop taking orders by 4pm",
         reply_markup=markup,
     )
+
+# def browse_shops_init(update, bot):
+#     query = update.callback_query
+#     buttons = [[
+
+#             InlineKeyboardButton(text="Back to Home!", callback_data="start")
+#         ]]
+#     reply_keyboard = buttons
+#     markup = InlineKeyboardMarkup(reply_keyboard)
+#     query.edit_message_text(
+#         text="Sorry we're currently down for maintenance! \n Sorry for the inconvenience, we'll be back in a bit!",
+#         reply_markup=markup,
+#     )
 
 def browse_vendors(update,bot):
     query = update.callback_query
