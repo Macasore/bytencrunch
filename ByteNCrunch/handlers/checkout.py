@@ -49,9 +49,9 @@ def checkout(update, bot):
         total = int(bot.user_data["cart_total"])
         rate = compute_rates(total)
         reply_keyboard = [
-            # [
-            #     InlineKeyboardButton(text="Bank tranfer to Byte n Crunch", callback_data="pay_with_direct_transfer")
-            # ] ,
+            [
+                InlineKeyboardButton(text="Bank tranfer to Byte n Crunch", callback_data="pay_with_direct_transfer")
+            ] ,
             [
                 InlineKeyboardButton(text="Pay with Flutterwave", callback_data="pay_with_flutter_wave")
             ],
@@ -61,7 +61,7 @@ def checkout(update, bot):
         ]
         markup = InlineKeyboardMarkup(reply_keyboard)
         query.edit_message_text(
-            text=f"You total comes down to # {total+rate} \n Subtotal: #{total} \n Shipping : #{rate}",
+            text=f"You total comes down to # {total+rate} \n Subtotal: #{total} \n Shipping : #{rate} \n PLease ensure that you have a stable internet condition before proceeding",
             reply_markup=markup,
         )
 
@@ -128,7 +128,7 @@ def confirm_direct_transfer(update, bot):
     name = get_user_name(update.effective_user.id)
     room = get_user_room(update.effective_user.id)
     print(name)
-    text_to_send = f"Thanks you for choosing us! \n Please send a copy of your transfer receipt to @david_ornstien or @mikeyruled to begin processing your order,\nand do well to join our official channel if you haven't: https://t.me/+TJOB63n3Jc81MWU0 "
+    text_to_send = f"Thanks you for choosing us! \n Please send a copy of your transfer receipt to @mikeyruled to begin processing your order,\nand do well to join our official channel if you haven't: https://t.me/+TJOB63n3Jc81MWU0 "
     push_order(bot.user_data["cart"],update.effective_user.id,name,int(bot.user_data["cart_total"]))
     my_text = f"Order for {name}, "
     print()
