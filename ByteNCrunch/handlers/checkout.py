@@ -67,7 +67,7 @@ def checkout(update, bot):
 
 def direct_transfer(update, bot):
     time_limit_upper = 6
-    time_limit_lower = 13
+    time_limit_lower = 17
     current_time = datetime.now().strftime("%Y-%m-%d, %H:%M").split(",")[1].split(":")[0].strip()
     ct_int = int(current_time)
     query = update.callback_query
