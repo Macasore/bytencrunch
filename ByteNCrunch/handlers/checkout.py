@@ -127,6 +127,7 @@ def confirm_direct_transfer(update, bot):
     bot.user_data["cart_total"] = new_total
     name = get_user_name(update.effective_user.id)
     room = get_user_room(update.effective_user.id)
+    order_id = os.getenv("order_group_id")
     print(name)
     text_to_send = f"Thanks you for choosing us! \n Please send a copy of your transfer receipt to @mikeyruled to begin processing your order,\nand do well to join our official channel if you haven't: https://t.me/+TJOB63n3Jc81MWU0 "
     push_order(bot.user_data["cart"],update.effective_user.id,name,int(bot.user_data["cart_total"]))
@@ -142,7 +143,7 @@ def confirm_direct_transfer(update, bot):
             InlineKeyboardButton(text="Back to home!", callback_data="start")
         ]
     ]
-    bot.bot.send_message(chat_id=-4050264876, text=my_text)
+    bot.bot.send_message(chat_id=order_id, text=my_text)
     markup = InlineKeyboardMarkup(reply_keyboard)
     query.edit_message_text(
         text=text_to_send,
