@@ -18,19 +18,20 @@ from database.query import get_student, get_product
 load_dotenv()
 
 def compute_rates(price):
-    rate = 0
-    if price <= 1000:
-        rate = 250
-    elif price in range(1050-1, 2500):
-        rate = 350
-    elif price in range(2550-1, 4000):
-        rate = 450
-    elif price in range(4050-1, 5500):
-        rate = 550
-    elif price > 5550:
-        rate = 600
+    # rate = 0
+    # if price <= 1000:
+    #     rate = 250
+    # elif price in range(1050-1, 2500):
+    #     rate = 350
+    # elif price in range(2550-1, 4000):
+    #     rate = 450
+    # elif price in range(4050-1, 5500):
+    #     rate = 550
+    # elif price > 5550:
+    #     rate = 600
 
-    return rate
+    # return rate
+    return 90
 
 def cart_to_lol(cart):
     temp_cart = list(cart.items())
