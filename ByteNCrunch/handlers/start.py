@@ -175,6 +175,9 @@ def home(update, bot):
     query.edit_message_text(
         text="""
             Welcome to Byte & Crunch! \n How may we be of assistance to you?
+
+     P.S
+\n Hurry up though, we'll be shutting down 5:30pm!
             """,
         reply_markup=markup
     )
