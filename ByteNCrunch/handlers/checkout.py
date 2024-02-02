@@ -135,18 +135,18 @@ def confirm_direct_transfer(update, bot):
     text_to_send = f"Thanks you for choosing us! \n Please send a copy of your transfer receipt to @mikeyruled to begin processing your order; your order will not be processed until you do.\nand do well to join our official channel if you haven't: https://t.me/+TJOB63n3Jc81MWU0 "
     push_order(bot.user_data["cart"],update.effective_user.id,name,int(bot.user_data["cart_total"]))
     my_text = f"Order for {name}, "
-    print()
-    for i in list(bot.user_data["cart"].items()):
-        product = get_product(i[0])
-        my_text += f"\n >> {i[1]} order(s) of {product[1]} at # {int(product[3]) * i[1]} \n To be delivered to {room} \n ***Payment not Confirmed*** \n #DirectBankTransfer"
+    # print()
+    # for i in list(bot.user_data["cart"].items()):
+    #     product = get_product(i[0])
+    #     my_text += f"\n >> {i[1]} order(s) of {product[1]} at # {int(product[3]) * i[1]} \n To be delivered to {room} \n ***Payment not Confirmed*** \n #DirectBankTransfer"
 
-    my_text += f" \n Total(plus shipping) = {new_total}"
+    # my_text += f" \n Total(plus shipping) = {new_total}"
     reply_keyboard = [
          [
             InlineKeyboardButton(text="Back to home!", callback_data="start")
         ]
     ]
-    bot.bot.send_message(chat_id= 1002099930414, text=my_text)
+    bot.bot.send_message(chat_id= order_group_id, text=my_text)
     markup = InlineKeyboardMarkup(reply_keyboard)
     query.edit_message_text(
         text=text_to_send,
