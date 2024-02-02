@@ -67,45 +67,14 @@ def checkout(update, bot):
 
 def direct_transfer(update, bot):
     query = update.callback_query
-    
-    time_limit_upper = 6
-    time_limit_lower = 17
-    current_time = datetime.now().strftime("%Y-%m-%d, %H:%M").split(",")[1].split(":")[0].strip()
-    ct_int = int(current_time)
-    if ct_int >= time_limit_lower :
-         text_to_send = f"Hi there! \n We're currently resting for the day, pleease come back between 8am and 4pm "
-         reply_keyboard = [
-         [
-            InlineKeyboardButton(text="Back to home!", callback_data="start")
-        ]
-    ]
-         markup = InlineKeyboardMarkup(reply_keyboard)
-         query.edit_message_text(
-            text=text_to_send,
-            reply_markup=markup,
-        )
-    elif  ct_int <= time_limit_upper:
-         text_to_send = f"Hi there! \n We're currently resting for the day, pleease come back between 8am and 4pm "
-         reply_keyboard = [
-         [
-            InlineKeyboardButton(text="Back to home!", callback_data="start")
-        ]
-    ]
-         markup = InlineKeyboardMarkup(reply_keyboard)
-         query.edit_message_text(
-            text=text_to_send,
-            reply_markup=markup,
-        )
-    else:
-        
-         total = int(bot.user_data["cart_total"])
-         rate = compute_rates(total)
-         total += rate
-         acc_name = os.environ["ACCOUNT_NAME"]
-         acc_no =  os.environ["ACCOUNT_NUMBER"]
-         bank =  os.environ["BANK"]
-         text_to_send = f"Make a tranfer of #{total} to the account given below: \n Account Name = {acc_name} \n Account Number = {acc_no} \n Bank = {bank} \n {ct_int}"
-         reply_keyboard = [
+    total = int(bot.user_data["cart_total"])
+    rate = compute_rates(total)
+    total += rate
+    acc_name = os.environ["ACCOUNT_NAME"]
+    acc_no =  os.environ["ACCOUNT_NUMBER"]
+    bank =  os.environ["BANK"]
+    text_to_send = f"Make a tranfer of #{total} to the account given below: \n Account Name = {acc_name} \n Account Number = {acc_no} \n Bank = {bank} \n {ct_int}"
+    reply_keyboard = [
              [
                 InlineKeyboardButton(text="I've made the Transfer!", callback_data="direct_payment_confirm")
             ],
@@ -113,11 +82,62 @@ def direct_transfer(update, bot):
                 InlineKeyboardButton(text="Back to home!", callback_data="start")
             ]
         ]
-         markup = InlineKeyboardMarkup(reply_keyboard)
-         query.edit_message_text(
+    markup = InlineKeyboardMarkup(reply_keyboard)
+    query.edit_message_text(
             text=text_to_send,
             reply_markup=markup,
         )
+    
+    # time_limit_upper = 6
+    # time_limit_lower = 17
+    # current_time = datetime.now().strftime("%Y-%m-%d, %H:%M").split(",")[1].split(":")[0].strip()
+    # ct_int = int(current_time)
+    # if ct_int >= time_limit_lower :
+    #      text_to_send = f"Hi there! \n We're currently resting for the day, pleease come back between 8am and 4pm "
+    #      reply_keyboard = [
+    #      [
+    #         InlineKeyboardButton(text="Back to home!", callback_data="start")
+    #     ]
+    # ]
+    #      markup = InlineKeyboardMarkup(reply_keyboard)
+    #      query.edit_message_text(
+    #         text=text_to_send,
+    #         reply_markup=markup,
+    #     )
+    # elif  ct_int <= time_limit_upper:
+    #      text_to_send = f"Hi there! \n We're currently resting for the day, pleease come back between 8am and 4pm "
+    #      reply_keyboard = [
+    #      [
+    #         InlineKeyboardButton(text="Back to home!", callback_data="start")
+    #     ]
+    # ]
+    #      markup = InlineKeyboardMarkup(reply_keyboard)
+    #      query.edit_message_text(
+    #         text=text_to_send,
+    #         reply_markup=markup,
+    #     )
+    # else:
+        
+    #      total = int(bot.user_data["cart_total"])
+    #      rate = compute_rates(total)
+    #      total += rate
+    #      acc_name = os.environ["ACCOUNT_NAME"]
+    #      acc_no =  os.environ["ACCOUNT_NUMBER"]
+    #      bank =  os.environ["BANK"]
+    #      text_to_send = f"Make a tranfer of #{total} to the account given below: \n Account Name = {acc_name} \n Account Number = {acc_no} \n Bank = {bank} \n {ct_int}"
+    #      reply_keyboard = [
+    #          [
+    #             InlineKeyboardButton(text="I've made the Transfer!", callback_data="direct_payment_confirm")
+    #         ],
+    #          [
+    #             InlineKeyboardButton(text="Back to home!", callback_data="start")
+    #         ]
+    #     ]
+    #      markup = InlineKeyboardMarkup(reply_keyboard)
+    #      query.edit_message_text(
+    #         text=text_to_send,
+    #         reply_markup=markup,
+    #     )
     
 
 
