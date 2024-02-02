@@ -20,7 +20,7 @@ def checkout(update, bot):
     ct_int = int(current_time)
     query = update.callback_query
     if ct_int >= time_limit_lower :
-         text_to_send = f"Hi there! \n We're currently resting for the day, pleease come back between 8am and 4pm "
+         text_to_send = f"Hi there! \n We're currently resting for the day, pleease come back between 8am and 5:30pm "
          reply_keyboard = [
          [
             InlineKeyboardButton(text="Back to home!", callback_data="start")
@@ -32,7 +32,7 @@ def checkout(update, bot):
             reply_markup=markup,
         )
     elif  ct_int <= time_limit_upper:
-         text_to_send = f"Hi there! \n We're currently resting for the day, pleease come back between 8am and 4pm "
+         text_to_send = f"Hi there! \n We're currently resting for the day, pleease come back between 8am and 5:30pm "
          reply_keyboard = [
          [
             InlineKeyboardButton(text="Back to home!", callback_data="start")
@@ -73,7 +73,7 @@ def direct_transfer(update, bot):
     current_time = datetime.now().strftime("%Y-%m-%d, %H:%M").split(",")[1].split(":")[0].strip()
     ct_int = int(current_time)
     if ct_int >= time_limit_lower :
-         text_to_send = f"Hi there! \n We're currently resting for the day, pleease come back between 8am and 4pm "
+         text_to_send = f"Hi there! \n We're currently resting for the day, pleease come back between 8am and 5:30pm "
          reply_keyboard = [
          [
             InlineKeyboardButton(text="Back to home!", callback_data="start")
@@ -85,7 +85,7 @@ def direct_transfer(update, bot):
             reply_markup=markup,
         )
     elif  ct_int <= time_limit_upper:
-         text_to_send = f"Hi there! \n We're currently resting for the day, pleease come back between 8am and 4pm "
+         text_to_send = f"Hi there! \n We're currently resting for the day, pleease come back between 8am and 5:30pm "
          reply_keyboard = [
          [
             InlineKeyboardButton(text="Back to home!", callback_data="start")
