@@ -49,9 +49,9 @@ def checkout(update, bot):
         total = int(bot.user_data["cart_total"])
         rate = compute_rates(total)
         reply_keyboard = [
-            [
-                InlineKeyboardButton(text="Bank tranfer to Byte n Crunch", callback_data="pay_with_direct_transfer")
-            ] ,
+            # [
+            #     InlineKeyboardButton(text="Bank tranfer to Byte n Crunch", callback_data="pay_with_direct_transfer")
+            # ] ,
             [
                 InlineKeyboardButton(text="Pay with Flutterwave", callback_data="pay_with_flutter_wave")
             ],
@@ -135,10 +135,9 @@ def confirm_direct_transfer(update, bot):
     text_to_send = f"Thanks you for choosing us! \n Please send a copy of your transfer receipt to @mikeyruled to begin processing your order; your order will not be processed until you do.\nand do well to join our official channel if you haven't: https://t.me/+TJOB63n3Jc81MWU0 "
     push_order(bot.user_data["cart"],update.effective_user.id,name,int(bot.user_data["cart_total"]))
     my_text = f"Order for {name}, "
-    # print()
-    # for i in list(bot.user_data["cart"].items()):
-    #     product = get_product(i[0])
-    #     my_text += f"\n >> {i[1]} order(s) of {product[1]} at # {int(product[3]) * i[1]} \n To be delivered to {room} \n ***Payment not Confirmed*** \n #DirectBankTransfer"
+    for i in list(bot.user_data["cart"].items()):
+        product = get_product(i[0])
+        my_text += f"\n >> {i[1]} order(s) of {product[1]} at # {int(product[3]) * i[1]} \n To be delivered to {room} \n ***Payment not Confirmed*** \n #DirectBankTransfer"
 
     # my_text += f" \n Total(plus shipping) = {new_total}"
     reply_keyboard = [
