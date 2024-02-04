@@ -132,7 +132,7 @@ def confirm_direct_transfer(update, bot):
     room = get_user_room(update.effective_user.id)
     order_group_id = os.getenv("order_group_id")
     print(name)
-    text_to_send = f"Thanks you for choosing us! \n Please send a copy of your transfer receipt to @mikeyruled to begin processing your order; your order will not be processed until you do.\nand do well to join our official channel if you haven't: https://t.me/+TJOB63n3Jc81MWU0 "
+    text_to_send = f"Thanks you for choosing us! \n Please send a copy of your transfer receipt to @mikeyruled to begin processing your order; your order will not be processed until you do.\nOrders will be sent out from 6pm to 7:30 pm and please do well to join our official channel if you haven't: https://t.me/+TJOB63n3Jc81MWU0 "
     push_order(bot.user_data["cart"],update.effective_user.id,name,int(bot.user_data["cart_total"]))
     my_text = f"Order for {name}, "
     for i in list(bot.user_data["cart"].items()):

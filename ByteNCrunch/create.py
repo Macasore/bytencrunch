@@ -130,4 +130,4 @@ create_database()
 for key, val in tables.items():
     create_table(key, val)
 
-populate_vendor_and_product("menu3.csv")
+populate_vendor_and_product("menu6.csv")
