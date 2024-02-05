@@ -31,7 +31,25 @@ def is_user(userid = None) -> bool:
     else:
         return True
 
+def get_vendor_name(myid):
+    mycon = connector.connect(
+    host= config.DB_HOST,
+    user=config.DB_USER,
+    password=config.DB_PASSWORD,
+    database=config.DATABASE,
+    port=os.environ["DB_PORT"],
+    ssl_disabled=True
+    )
 
+    crsr = mycon.cursor()
+    crsr.execute(
+        "SELECT * FROM vendor WHERE userid=%s",
+        (myid,)
+        )            
+    result = crsr.fetchall()[0][1]
+    mycon.close()
+    return result
+    
 
 def get_all_vendors():
     mycon = connector.connect(
