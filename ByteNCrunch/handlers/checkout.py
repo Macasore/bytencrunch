@@ -6,7 +6,7 @@ from dotenv.main import load_dotenv
 from datetime import datetime
 import os
 from database.manipulate import push_order
-from database.query import get_user_name, get_user_room
+from database.query import get_user_name, get_user_room, get_vendor_name
 
 load_dotenv()
 
@@ -137,7 +137,8 @@ def confirm_direct_transfer(update, bot):
     my_text = f"Order for {name}, "
     for i in list(bot.user_data["cart"].items()):
         product = get_product(i[0])
-        my_text += f"\n >> {i[1]} order(s) of {product[1]} at # {int(product[3]) * i[1]} \n To be delivered to {room} \n ***Payment not Confirmed*** \n #DirectBankTransfer"
+        vendor = get_vendor_name(product[2])
+        my_text += f"\n >> {i[1]} order(s) of {product[1]} from '{vendor}' at # {int(product[3]) * i[1]} \n To be delivered to {room} \n ***Payment not Confirmed*** \n #DirectBankTransfer"
 
     my_text += f"\n Total(plus shipping) = {new_total}"
     reply_keyboard = [
