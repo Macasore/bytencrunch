@@ -89,7 +89,7 @@ def add_to_cart_confirm(update, bot):
     ]
     markup = InlineKeyboardMarkup(reply_keyboard)
     query.edit_message_text(
-        text=f"{product_count} orders of {get_product(product_id)[1] }added to cart! \n To proceed to checkout, tap on 'Manage Cart'",
+        text=f"{product_count} orders of {get_product(product_id)[1] } added to cart! \n To proceed to checkout, tap on 'Manage Cart'",
         reply_markup=markup,
     )
 
