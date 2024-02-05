@@ -14,7 +14,7 @@ load_dotenv()
 
 
 def checkout(update, bot):
-    time_limit_upper = 2
+    time_limit_upper = 6
     time_limit_lower = 16
     current_time = datetime.now().strftime("%Y-%m-%d, %H:%M").split(",")[1].split(":")[0].strip()
     ct_int = int(current_time)
@@ -68,7 +68,7 @@ def checkout(update, bot):
 def direct_transfer(update, bot):
     query = update.callback_query
     
-    time_limit_upper = 2
+    time_limit_upper = 6
     time_limit_lower = 16
     current_time = datetime.now().strftime("%Y-%m-%d, %H:%M").split(",")[1].split(":")[0].strip()
     ct_int = int(current_time)
