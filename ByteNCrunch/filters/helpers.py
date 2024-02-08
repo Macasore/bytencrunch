@@ -31,7 +31,7 @@ def compute_rates(price):
     #     rate = 600
 
     # return rate
-    return 90
+    return 150
 
 def cart_to_lol(cart):
     temp_cart = list(cart.items())
